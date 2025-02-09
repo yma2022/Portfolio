@@ -32,8 +32,8 @@ export const projectsData = [
     technologies: ['Next.js', 'TypeScript', ' Nest.js', 'Tailwind', 'Prisma'],
     links: {
       preview: 'https://socialhub-ms.vercel.app/',
-      github: 'https://github.com/Skolaczk/SocialHub',
-      githubApi: 'https://api.github.com/repos/Skolaczk/SocialHub',
+      github: 'https://github.com/yma2022/SocialHub',
+      githubApi: 'https://api.github.com/repos/yma2022/SocialHub',
     },
   },
   {
@@ -49,9 +49,9 @@ export const projectsData = [
       'Prisma',
     ],
     links: {
-      preview: 'https://next-starter-skolaczk.vercel.app',
-      github: 'https://github.com/Skolaczk/next-starter',
-      githubApi: 'https://api.github.com/repos/Skolaczk/next-starter',
+      preview: 'https://next-starter-yma2022.vercel.app',
+      github: 'https://github.com/yma2022/next-starter',
+      githubApi: 'https://api.github.com/repos/yma2022/next-starter',
     },
   },
   {
@@ -67,33 +67,33 @@ export const projectsData = [
     ],
     links: {
       preview: 'https://audiophile-ms.netlify.app/',
-      github: 'https://github.com/Skolaczk/Audiophile',
-      githubApi: 'https://api.github.com/repos/Skolaczk/Audiophile',
+      github: 'https://github.com/yma2022/Audiophile',
+      githubApi: 'https://api.github.com/repos/yma2022/Audiophile',
     },
   },
 ] as const;
 
 export const experiencesData = [
   {
-    title: 'Internship at WEB-BOX',
-    location: 'Tarnobrzeg, PL',
+    title: 'MS in Computer Science at GaTech',
+    location: 'Atlanta, GA',
     description:
-      'During this internship, I focused on two key areas: creating Wordpress plugins and managing website content, plugins, and settings.',
+      'I was pursuing a Master of Science in Computer Science at Georgia Tech, focusing on software development and machine learning. I have completed courses in advanced algorithms, software engineering, and machine learning.',
     date: '2023',
   },
   {
-    title: 'Internship at Chop-Chop',
-    location: 'Remote',
+    title: 'Internship at Amazon',
+    location: 'Detroit, MI',
     description:
-      'During my internship at Chop-Chop, I collaborated with an experienced IT team, focusing on tasks in Next.js. This experience provided valuable insights into teamwork and advanced my proficiency in Next.js.',
+      'I interned at Amazon as a software development engineer, where I worked on the Datalake platform. I developed scalable applications and optimized system performance, gaining hands-on experience with AWS services and distributed systems.',
     date: '2024',
   },
   {
-    title: 'Freelancing',
+    title: 'EduPolaris AI, Tech Lead & Software Engineer',
     location: 'Remote',
     description:
-      'As a freelancer, I specialized in graphic design using Figma and website development using Next.js with Sanity CMS. I undertook projects independently, from design conceptualization to final implementation, ensuring client satisfaction.',
-    date: '2023 - present',
+      'I led the development of an AI-driven education platform, overseeing the implementation of system architecture and backend services. I collaborated with a team of engineers to optimize performance and ensure scalability, leveraging Go, PostgreSQL, and gRPC.',
+    date: '2024 - present',
   },
 ] as const;
 

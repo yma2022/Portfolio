@@ -1,0 +1,77 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+      {
+          "type": "Feature",
+          "properties": {
+              "name": "New York",
+              "lat": 40.7128,
+              "lon": -74.0060
+          }
+      },
+      {
+          "type": "Feature",
+          "properties": {
+              "name": "Detroit",
+              "lat": 42.3314,
+              "lon": -83.0458
+          }
+      },
+      {
+          "type": "Feature",
+          "properties": {
+              "name": "Washington DC",
+              "lat": 38.9072,
+              "lon": -77.0369
+          }
+      },
+      {
+          "type": "Feature",
+          "properties": {
+              "name": "Los Angeles",
+              "lat": 34.0522,
+              "lon": -118.2437
+          }
+      },
+      {
+          "type": "Feature",
+          "properties": {
+              "name": "Atlanta",
+              "lat": 33.7490,
+              "lon": -84.3880
+          }
+      },
+      {
+          "type": "Feature",
+          "properties": {
+              "name": "Shanghai",
+              "lat": 31.2304,
+              "lon": 121.4737
+          }
+      },
+      {
+          "type": "Feature",
+          "properties": {
+              "name": "Beijing",
+              "lat": 39.9042,
+              "lon": 116.4074
+          }
+      },
+      {
+          "type": "Feature",
+          "properties": {
+              "name": "Xi'an",
+              "lat": 34.3416,
+              "lon": 108.9398
+          }
+      },
+      {
+          "type": "Feature",
+          "properties": {
+              "name": "Boston",
+              "lat": 42.3601,
+              "lon": -71.0589
+          }
+      }
+  ]
+}
