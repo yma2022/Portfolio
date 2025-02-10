@@ -22,25 +22,28 @@ export const About = () => {
       <SectionHeading heading="About Me" />
       <div className="-mt-5 max-w-2xl text-center leading-7">
         <p className="mb-4">
-          I&apos;m Youlong Ma, a full-stack developer with a strong background
-          in software engineering. I have experience working on innovative
-          projects, from developing scalable applications to implementing
-          efficient system architectures. My expertise spans React Native,
-          TypeScript, and AWS for frontend and cloud services, while I leverage
-          Go, PostgreSQL, and gRPC for backend development. I thrive on solving
-          complex problems and optimizing performance, especially in distributed
-          systems.
+          {' '}
+          I am Youlong Ma, a full-stack developer with a robust background in
+          software engineering. Over the course of my career, I have tackled
+          complex challenges and delivered innovative solutions—from building
+          scalable applications to designing efficient system architectures. My
+          expertise spans React Native, TypeScript, and AWS for frontend and
+          cloud services, complemented by Go, PostgreSQL, and gRPC on the
+          backend. I excel at optimizing performance in distributed systems and
+          thrive on solving intricate technical problems.{' '}
+        </p>
+        <p className="mb-4">
+          {' '}
+          My experience includes contributions to AI-driven education platforms
+          and compiler development, where I combined deep technical knowledge
+          with tangible real-world impact. I am perpetually eager to explore
+          emerging technologies, refine my skills, and share best practices.{' '}
         </p>
         <p>
-          I&apos;ve contributed to projects in AI-driven education platforms and
-          compiler development, combining technical depth with real-world
-          impact. I’m always eager to explore new technologies and refine my
-          skills.
-        </p>
-        <p>
-          I&apos;m open to job opportunities where I can contribute, learn, and
-          grow. If you have an opportunity that aligns with my expertise, feel
-          free to reach out!
+          {' '}
+          I am currently open to opportunities that allow me to contribute,
+          learn, and grow. If you have a role that aligns with my expertise, I
+          would be delighted to connect.
         </p>
       </div>
       <Skills />

@@ -27,7 +27,7 @@ export const Intro = () => {
         animate={{ opacity: 1, y: 0 }}
         className="text-3xl font-bold leading-tight tracking-tighter sm:text-4xl"
       >
-        <TypingText text="Welcome to yma2022's Homepage" />
+        <TypingText text="Youlong Ma" />
       </motion.h1>
       <motion.div
         initial={{ opacity: 0, y: 100 }}

@@ -62,14 +62,16 @@ const TechSkillsTree = () => {
         { id: 'Firebase', group: 3 },
 
         // DevOps & Tools
-        { id: 'DevOps & Tools', group: 1 },
+        { id: 'Tools', group: 1 },
         { id: 'Docker', group: 2 },
         { id: 'Kubernetes', group: 2 },
         { id: 'AWS', group: 2 },
         { id: 'CI/CD', group: 2 },
+        { id: 'Unix/Linux', group: 2 },
+        { id: 'Git', group: 2 },
 
         // Monitoring & Observability
-        { id: 'Monitoring & Observability', group: 1 },
+        { id: 'DevOps', group: 1 },
         { id: 'Prometheus', group: 2 },
         { id: 'Metricbeat', group: 2 },
         { id: 'Elasticsearch', group: 2 },
@@ -83,11 +85,6 @@ const TechSkillsTree = () => {
         { id: 'Pandas', group: 2 },
         { id: 'SciPy', group: 2 },
         { id: 'Scikit-learn', group: 2 },
-
-        // Other Technologies
-        { id: 'Other Technologies', group: 1 },
-        { id: 'Unix/Linux', group: 2 },
-        { id: 'Git', group: 2 },
       ],
 
       links: [
@@ -119,19 +116,21 @@ const TechSkillsTree = () => {
         { source: 'NoSQL', target: 'Firebase' },
 
         // DevOps & Tools
-        { source: 'yma2022', target: 'DevOps & Tools' },
-        { source: 'DevOps & Tools', target: 'Docker' },
-        { source: 'DevOps & Tools', target: 'Kubernetes' },
-        { source: 'DevOps & Tools', target: 'AWS' },
-        { source: 'DevOps & Tools', target: 'CI/CD' },
+        { source: 'yma2022', target: 'Tools' },
+        { source: 'Tools', target: 'Docker' },
+        { source: 'Tools', target: 'Kubernetes' },
+        { source: 'Tools', target: 'AWS' },
+        { source: 'Tools', target: 'CI/CD' },
+        { source: 'Tools', target: 'Unix/Linux' },
+        { source: 'Tools', target: 'Git' },
 
         // Monitoring & Observability
-        { source: 'yma2022', target: 'Monitoring & Observability' },
-        { source: 'Monitoring & Observability', target: 'Prometheus' },
-        { source: 'Monitoring & Observability', target: 'Metricbeat' },
-        { source: 'Monitoring & Observability', target: 'Elasticsearch' },
-        { source: 'Monitoring & Observability', target: 'Fluentd' },
-        { source: 'Monitoring & Observability', target: 'Kibana' },
+        { source: 'yma2022', target: 'DevOps' },
+        { source: 'DevOps', target: 'Prometheus' },
+        { source: 'DevOps', target: 'Metricbeat' },
+        { source: 'DevOps', target: 'Elasticsearch' },
+        { source: 'DevOps', target: 'Fluentd' },
+        { source: 'DevOps', target: 'Kibana' },
 
         // Machine Learning & AI
         { source: 'yma2022', target: 'Machine Learning & AI' },
@@ -140,11 +139,6 @@ const TechSkillsTree = () => {
         { source: 'Machine Learning & AI', target: 'Pandas' },
         { source: 'Machine Learning & AI', target: 'SciPy' },
         { source: 'Machine Learning & AI', target: 'Scikit-learn' },
-
-        // Other Technologies
-        { source: 'yma2022', target: 'Other Technologies' },
-        { source: 'Other Technologies', target: 'Unix/Linux' },
-        { source: 'Other Technologies', target: 'Git' },
       ],
     };
     data.links = data.links.map((link) => {
