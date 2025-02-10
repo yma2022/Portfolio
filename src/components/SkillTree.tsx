@@ -70,7 +70,7 @@ const TechSkillsTree = () => {
         { id: 'Unix/Linux', group: 2 },
         { id: 'Git', group: 2 },
 
-        // Monitoring & Observability
+        // DevOps
         { id: 'DevOps', group: 1 },
         { id: 'Prometheus', group: 2 },
         { id: 'Metricbeat', group: 2 },
@@ -78,13 +78,21 @@ const TechSkillsTree = () => {
         { id: 'Fluentd', group: 2 },
         { id: 'Kibana', group: 2 },
 
-        // Machine Learning & AI
-        { id: 'Machine Learning & AI', group: 1 },
-        { id: 'PyTorch', group: 2 },
+        // Data Analysis
+        { id: 'Data Analysis', group: 1 },
         { id: 'NumPy', group: 2 },
         { id: 'Pandas', group: 2 },
         { id: 'SciPy', group: 2 },
         { id: 'Scikit-learn', group: 2 },
+
+        // AI
+        { id: 'AI', group: 1 },
+        { id: 'PyTorch', group: 2 },
+        { id: 'Tiktoken', group: 2 },
+        { id: 'OpenAI', group: 2 },
+        { id: 'LangChain', group: 2 },
+        { id: 'LangGraph', group: 2 },
+        { id: 'LangChain4j', group: 2 },
       ],
 
       links: [
@@ -132,13 +140,22 @@ const TechSkillsTree = () => {
         { source: 'DevOps', target: 'Fluentd' },
         { source: 'DevOps', target: 'Kibana' },
 
-        // Machine Learning & AI
-        { source: 'yma2022', target: 'Machine Learning & AI' },
-        { source: 'Machine Learning & AI', target: 'PyTorch' },
-        { source: 'Machine Learning & AI', target: 'NumPy' },
-        { source: 'Machine Learning & AI', target: 'Pandas' },
-        { source: 'Machine Learning & AI', target: 'SciPy' },
-        { source: 'Machine Learning & AI', target: 'Scikit-learn' },
+        // Data Analysis
+        { source: 'yma2022', target: 'Data Analysis' },
+        { source: 'Data Analysis', target: 'PyTorch' },
+        { source: 'Data Analysis', target: 'NumPy' },
+        { source: 'Data Analysis', target: 'Pandas' },
+        { source: 'Data Analysis', target: 'SciPy' },
+        { source: 'Data Analysis', target: 'Scikit-learn' },
+
+        // AI
+        { source: 'yma2022', target: 'AI' },
+        { source: 'AI', target: 'PyTorch' },
+        { source: 'AI', target: 'Tiktoken' },
+        { source: 'AI', target: 'OpenAI' },
+        { source: 'AI', target: 'LangChain' },
+        { source: 'AI', target: 'LangGraph' },
+        { source: 'AI', target: 'LangChain4j' },
       ],
     };
     data.links = data.links.map((link) => {
