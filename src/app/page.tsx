@@ -9,7 +9,7 @@ import { projectsData } from '@/lib/data';
 const Home = async () => {
   const starsCount = await Promise.all(
     projectsData.map(async ({ links }) => {
-      const res = await fetch(links.githubApi, { cache: 'no-store' });
+      const res = await fetch(links.githubApi);
       const data = await res.json();
       return data.stargazers_count;
     })
