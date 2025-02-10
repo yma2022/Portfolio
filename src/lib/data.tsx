@@ -31,7 +31,7 @@ export const projectsData = [
       'My personal portfolio landing page. Built with Next.js and Tailwind CSS.',
     technologies: ['Next.js', 'TypeScript', 'Three.js', 'd3.js', 'Tailwind'],
     links: {
-      preview: 'portfolio-yma2022s-projects.vercel.app',
+      preview: '',
       github: 'https://github.com/yma2022/Portfolio',
       githubApi: 'https://api.github.com/repos/yma2022/Portfolio',
     },
@@ -40,18 +40,19 @@ export const projectsData = [
     image: '/projects/nextstarter.svg',
     title: 'Ask Eddie',
     description:
-      'A genAI assisted counseling platform for high school students.',
+      'Contributed to its end-to-end system design—integrating AI language models, data-driven insights, and scalable backend services to deliver expert-level counseling at a fraction of traditional costs.',
     technologies: ['React Native', 'Node.js', 'PostgreSQL', 'NativeWind'],
     links: {
-      preview: 'https://www.example.com',
+      preview: 'https://apps.apple.com/us/app/ask-eddie/id6738869004',
       github: 'https://github.com/yma2022/',
       githubApi: 'https://api.github.com/repos/yma2022/',
     },
   },
   {
     image: '/projects/audiophile.svg',
-    title: 'Machine Learning',
-    description: 'Implementation of machine learning algorithms from scratch.',
+    title: 'Machine Learning Mastery',
+    description:
+      'Implemented and tuned algorithms such as decision trees, neural networks, genetic algorithms, and manifold learning, then showcased interesting outcomes through empirical demos.',
     technologies: [
       'Python',
       'Scikit-learn',
@@ -61,7 +62,7 @@ export const projectsData = [
       'OpenAI Gym',
     ],
     links: {
-      preview: 'https://www.example.com',
+      preview: 'https://github.com/yma2022/CS7641_Machine_Learning',
       github: 'https://github.com/yma2022/CS7641_Machine_Learning',
       githubApi: 'https://api.github.com/repos/yma2022/CS7641_Machine_Learning',
     },

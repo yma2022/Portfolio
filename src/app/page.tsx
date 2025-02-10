@@ -1,5 +1,4 @@
 import { About } from '@/components/about';
-import { Contact } from '@/components/contact';
 import { Experience } from '@/components/experience';
 import { Footer } from '@/components/footer';
 import { Intro } from '@/components/intro';
@@ -22,7 +21,6 @@ const Home = async () => {
         <About />
         <Projects starsCount={starsCount} />
         <Experience />
-        <Contact />
         <Footer />
       </div>
     </>
