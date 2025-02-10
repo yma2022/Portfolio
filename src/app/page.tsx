@@ -1,3 +1,5 @@
+import Script from 'next/script';
+
 import { About } from '@/components/about';
 import { Experience } from '@/components/experience';
 import { Footer } from '@/components/footer';
@@ -16,6 +18,20 @@ const Home = async () => {
 
   return (
     <>
+      {/* Google Analytics */}
+      <Script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=G-E98RBPVL3W"
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-E98RBPVL3W');
+        `}
+      </Script>
       <div className="container flex flex-col items-center">
         <Intro />
         <About />
