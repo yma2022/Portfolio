@@ -85,7 +85,7 @@ export const Intro = () => {
           </a>
         </Button>
       </motion.div>
-      <div className="mt-[150]  max-w-2xl text-center leading-7">
+      <div className="mt-[150px]  max-w-2xl text-center leading-7">
         <HoverableParagraph text="I’m Youlong Ma, a self-driven full-stack developer eager for new opportunities to grow and make a meaningful impact. I thrive on tackling challenging problems and building robust solutions." />
 
         <HoverableParagraph text="Over the years, I’ve worked with Java, Python, Go, React Native, TypeScript, AWS, PostgreSQL, and gRPC—delivering scalable software for AI-driven education platforms, compiler development, and various system architectures." />
