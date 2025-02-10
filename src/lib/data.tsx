@@ -70,25 +70,25 @@ export const projectsData = [
 
 export const experiencesData = [
   {
-    title: 'MS in Computer Science at GaTech',
-    location: 'Atlanta, GA',
+    title: 'EduPolaris AI, Tech Lead & Software Engineer',
+    location: 'Remote',
     description:
-      'I was pursuing a Master of Science in Computer Science at Georgia Tech, focusing on software development and machine learning. I have completed courses in advanced algorithms, software engineering, and machine learning.',
-    date: '2023',
+      'Led the development of an AI-driven education platform using Go, PostgreSQL, and gRPC. Delivered system architecture improvements for high performance and scalability, advancing product capabilities and user engagement.',
+    date: '2024 - present',
   },
   {
     title: 'Internship at Amazon',
     location: 'Detroit, MI',
     description:
-      'I interned at Amazon as a software development engineer, where I worked on the Datalake platform. I developed scalable applications and optimized system performance, gaining hands-on experience with AWS services and distributed systems.',
+      'Developed scalable applications on the Datalake platform using AWS and distributed systems. Improved system performance, optimized data processing workflows, and contributed to higher service reliability.',
     date: '2024',
   },
   {
-    title: 'EduPolaris AI, Tech Lead & Software Engineer',
-    location: 'Remote',
+    title: 'MS in Computer Science at GaTech',
+    location: 'Atlanta, GA',
     description:
-      'I led the development of an AI-driven education platform, overseeing the implementation of system architecture and backend services. I collaborated with a team of engineers to optimize performance and ensure scalability, leveraging Go, PostgreSQL, and gRPC.',
-    date: '2024 - present',
+      'Strengthened expertise in advanced algorithms, software engineering, and machine learning. Delivered projects with real-world applications, emphasizing scalable software and data-driven solutions.',
+    date: '2023',
   },
 ] as const;
 

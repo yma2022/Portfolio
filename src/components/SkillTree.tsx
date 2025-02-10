@@ -1,8 +1,6 @@
 'use client';
 import { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
-import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 interface Node extends d3.SimulationNodeDatum {
   id: string;
@@ -142,7 +140,6 @@ const TechSkillsTree = () => {
 
         // Data Analysis
         { source: 'yma2022', target: 'Data Analysis' },
-        { source: 'Data Analysis', target: 'PyTorch' },
         { source: 'Data Analysis', target: 'NumPy' },
         { source: 'Data Analysis', target: 'Pandas' },
         { source: 'Data Analysis', target: 'SciPy' },
@@ -169,23 +166,22 @@ const TechSkillsTree = () => {
         target: targetNode,
       } as Link;
     });
-    // Three.js setup
-    const width = containerRef.current.clientWidth;
-    const height = 800;
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 2000);
-    camera.position.z = 1000;
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(width, height);
-    containerRef.current.appendChild(renderer.domElement);
+    const width = 928;
+    const height = 928;
 
-    // Orbit Controls
-    const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableRotate = true;
-    controls.enableZoom = true;
-    controls.enablePan = true;
+    // === 2) Create an SVG inside the container ===
+    const svg = d3
+      .select(containerRef.current)
+      .append('svg')
+      .style('width', '100%')
+      .style('height', '100%')
+      .attr('viewBox', `0 0 ${width} ${height}`)
+      .attr('preserveAspectRatio', 'xMidYMid meet');
 
-    // D3 Force Simulation
+    // A color scale for groups
+    const color = d3.scaleOrdinal(d3.schemeCategory10);
+
+    // === 3) Create a Force Simulation ===
     const simulation = d3
       .forceSimulation(data.nodes)
       .force(
@@ -193,168 +189,106 @@ const TechSkillsTree = () => {
         d3
           .forceLink(data.links)
           .id((d: d3.SimulationNodeDatum) => (d as Node).id)
-          .distance(150)
+          .distance(120)
       )
-      .force('charge', d3.forceManyBody().strength(-200))
-      .force('center', d3.forceCenter(0, 0))
-      .alphaDecay(0.05)
-      .velocityDecay(0.6);
+      .force('charge', d3.forceManyBody().strength(-300)) // repulsion
+      .force('center', d3.forceCenter(width / 2, height / 2)) // center
+      .force('x', d3.forceX(width / 2).strength(0.05)) // pull toward center x
+      .force('y', d3.forceY(height / 2).strength(0.05)) // pull toward center y
+      .force('collision', d3.forceCollide(30)); // prevents overlap
 
-    // Three.js objects
-    const nodeMeshes: THREE.Mesh[] = [];
-    const labelSprites: THREE.Sprite[] = [];
-    const linkLines: THREE.Line[] = [];
-    const groupColors = [0xff5733, 0x3498db, 0x2ecc71, 0x9b59b6];
-
-    // Function to create text labels
-    const createTextSprite = (text: string) => {
-      const canvas = document.createElement('canvas');
-      const context = canvas.getContext('2d')!;
-      context.font = 'bold 40px Arial';
-      context.fillStyle = 'white';
-      context.fillText(text, 0, 40);
-
-      const texture = new THREE.CanvasTexture(canvas);
-      const material = new THREE.SpriteMaterial({ map: texture });
-      const sprite = new THREE.Sprite(material);
-      sprite.scale.set(150, 75, 1);
-      return sprite;
-    };
-
-    // Create nodes and labels
-    data.nodes.forEach((node) => {
-      const geometry = new THREE.SphereGeometry(10, 32, 32);
-      const material = new THREE.MeshBasicMaterial({
-        color: groupColors[node.group],
-      });
-      const mesh = new THREE.Mesh(geometry, material);
-      scene.add(mesh);
-      nodeMeshes.push(mesh);
-
-      // Create label
-      const label = createTextSprite(node.id);
-      scene.add(label);
-      labelSprites.push(label);
-    });
-
-    // Create links
-    const linkMaterial = new THREE.LineBasicMaterial({ color: 0xcccccc });
-    data.links.forEach(() => {
-      const geometry = new THREE.BufferGeometry();
-      const line = new THREE.Line(geometry, linkMaterial);
-      scene.add(line);
-      linkLines.push(line);
-    });
-
-    // Drag functionality
-    const raycaster = new THREE.Raycaster();
-    const mouse = new THREE.Vector2();
-    let selectedNode: Node | null = null;
-    const initialMousePos = new THREE.Vector2();
-    const initialNodePos = new THREE.Vector3();
-
-    const onMouseDown = (event: MouseEvent) => {
-      const rect = renderer.domElement.getBoundingClientRect();
-      mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-      mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-
-      // Raycast to find nodes
-      raycaster.setFromCamera(mouse, camera);
-      const intersects = raycaster.intersectObjects(nodeMeshes);
-
-      if (intersects.length > 0) {
-        const index = nodeMeshes.indexOf(intersects[0].object as THREE.Mesh);
-        selectedNode = data.nodes[index];
-        initialMousePos.set(event.clientX, event.clientY);
-        initialNodePos.set(
-          selectedNode.x ?? 0,
-          selectedNode.y ?? 0,
-          selectedNode.z ?? 0
-        );
-
-        selectedNode.fx = selectedNode.x;
-        selectedNode.fy = selectedNode.y;
-        selectedNode.fz = selectedNode.z;
-
-        document.addEventListener('mousemove', onMouseMove);
-        document.addEventListener('mouseup', onMouseUp);
+    // === 4) Define the Drag Behavior (your snippet) ===
+    function drag(simulation: d3.Simulation<Node, Link>) {
+      function dragstarted(
+        event: d3.D3DragEvent<SVGCircleElement, Node, Node>,
+        d: Node
+      ) {
+        if (!event.active) simulation.alphaTarget(0.3).restart();
+        d.fx = d.x;
+        d.fy = d.y;
       }
-    };
 
-    const onMouseMove = (event: MouseEvent) => {
-      if (!selectedNode) return;
-
-      const deltaX = event.clientX - initialMousePos.x;
-      const deltaY = event.clientY - initialMousePos.y;
-
-      const delta = new THREE.Vector3(
-        deltaX * 0.5,
-        -deltaY * 0.5,
-        0
-      ).applyQuaternion(camera.quaternion);
-
-      selectedNode.fx = initialNodePos.x + delta.x;
-      selectedNode.fy = initialNodePos.y + delta.y;
-      selectedNode.fz = initialNodePos.z + delta.z;
-      simulation.alpha(1).restart();
-    };
-
-    const onMouseUp = () => {
-      if (selectedNode) {
-        selectedNode.fx = null;
-        selectedNode.fy = null;
-        selectedNode.fz = null;
-        selectedNode = null;
+      function dragged(
+        event: d3.D3DragEvent<SVGCircleElement, Node, Node>,
+        d: Node
+      ) {
+        d.fx = event.x;
+        d.fy = event.y;
       }
-      document.removeEventListener('mousemove', onMouseMove);
-      document.removeEventListener('mouseup', onMouseUp);
-    };
 
-    renderer.domElement.addEventListener('mousedown', onMouseDown);
+      function dragended(
+        event: d3.D3DragEvent<SVGCircleElement, Node, Node>,
+        d: Node
+      ) {
+        if (!event.active) simulation.alphaTarget(0);
+        d.fx = null;
+        d.fy = null;
+      }
 
-    // Animation loop
+      return d3
+        .drag<SVGCircleElement, Node>()
+        .on('start', dragstarted)
+        .on('drag', dragged)
+        .on('end', dragended);
+    }
+
+    // === 5) Draw the Links (as lines) ===
+    const link = svg
+      .selectAll<SVGLineElement, Link>('.link')
+      .data(data.links)
+      .enter()
+      .append('line')
+      .attr('class', 'link')
+      .attr('stroke', '#999')
+      .attr('stroke-opacity', 0.6)
+      .attr('stroke-width', 1.5);
+
+    // === 6) Draw the Nodes (as circles) ===
+    const node = svg
+      .selectAll<SVGCircleElement, Node>('.node')
+      .data(data.nodes)
+      .enter()
+      .append('circle')
+      .attr('class', 'node')
+      .attr('r', 8)
+      .attr('fill', (d) => color(d.group.toString()))
+      .call(drag(simulation)); // attach the drag behavior
+
+    // === 7) (Optional) Add Text Labels ===
+    const label = svg
+      .selectAll<SVGTextElement, Node>('text')
+      .data(data.nodes)
+      .enter()
+      .append('text')
+      .text((d) => d.id)
+      .attr('dx', 12)
+      .attr('dy', '0.35em')
+      .style('font-family', 'sans-serif')
+      .style('font-size', '12px')
+      .style('fill', '#fff');
+
+    // === 8) On each tick, update positions of nodes & links ===
     simulation.on('tick', () => {
-      nodeMeshes.forEach((mesh, i) => {
-        const node = data.nodes[i];
-        mesh.position.set(node.x || 0, node.y || 0, node.z || 0);
-        labelSprites[i].position.set(
-          node.x || 0,
-          (node.y || 0) + 15,
-          node.z || 0
-        );
-      });
+      link
+        .attr('x1', (d: Link) => (d.source as Node).x ?? 0)
+        .attr('y1', (d: Link) => (d.source as Node).y ?? 0)
+        .attr('x2', (d: Link) => (d.target as Node).x ?? 0)
+        .attr('y2', (d: Link) => (d.target as Node).y ?? 0);
 
-      linkLines.forEach((line, i) => {
-        const link = data.links[i];
-        const source = link.source as Node;
-        const target = link.target as Node;
-        const points = [
-          new THREE.Vector3(source.x || 0, source.y || 0, source.z || 0),
-          new THREE.Vector3(target.x || 0, target.y || 0, target.z || 0),
-        ];
-        line.geometry.setFromPoints(points);
-      });
+      node.attr('cx', (d) => d.x ?? 0).attr('cy', (d) => d.y ?? 0);
+
+      label.attr('x', (d) => d.x ?? 0).attr('y', (d) => d.y ?? 0);
     });
 
-    const animate = () => {
-      requestAnimationFrame(animate);
-      controls.update();
-      renderer.render(scene, camera);
-    };
-    animate();
-
+    // === 9) Cleanup on unmount ===
     return () => {
-      renderer.domElement.removeEventListener('mousedown', onMouseDown);
-      document.removeEventListener('mousemove', onMouseMove);
-      document.removeEventListener('mouseup', onMouseUp);
+      // Remove the SVG so it doesn't duplicate if this component re-mounts
+      svg.remove();
       simulation.stop();
-      controls.dispose();
-      renderer.dispose();
-      containerRef.current?.removeChild(renderer.domElement);
     };
   }, []);
 
-  return <div ref={containerRef} style={{ width: '100%', height: '800px' }} />;
+  return <div ref={containerRef} style={{ width: '100%', height: '100%' }} />;
 };
 
 export default TechSkillsTree;

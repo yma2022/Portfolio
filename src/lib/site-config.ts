@@ -1,9 +1,9 @@
 import { env } from '@/env.mjs';
 
 export const siteConfig = {
-  title: 'yma2022 | Developer',
+  title: 'Youlong Ma',
   description:
-    "Hello, I'm yma. I love solving complex problems and I am passionate about development.",
+    "Hello, I'm Youlong Ma. I love solving complex problems and I am passionate about development.",
   keywords: [
     'Youlong Ma',
     'yma2022',

@@ -86,6 +86,7 @@ const EarthScene = () => {
     camera.position.z = 3;
 
     scene.add(globeRef.current);
+    globeRef.current.scale.set(1.5, 1.5, 1.5);
 
     // Load world map and cities data
     Promise.all([
