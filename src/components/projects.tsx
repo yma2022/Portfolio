@@ -30,7 +30,7 @@ export const Projects = ({ starsCount }: TProps) => {
         }}
       >
         <SectionHeading
-          heading="My Projects"
+          heading="Projects"
           content="Projects I worked on. Each of them containing its own case study."
         />
       </motion.div>

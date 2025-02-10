@@ -21,7 +21,7 @@ export const Experience = () => {
   return (
     <section ref={sectionRef} id="experience" className="my-10 scroll-mt-28">
       <SectionHeading
-        heading="My Experience"
+        heading="Experience"
         content="Professional experience that I have accumulated over several years."
       />
       <VerticalTimeline lineColor="hsl(var(--muted))">
