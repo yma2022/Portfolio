@@ -4,7 +4,6 @@ import { PropsWithChildren } from 'react';
 import type { Metadata } from 'next';
 
 import { ActiveSectionProvider } from '@/components/active-section-provider';
-import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/toaster';
 import { fonts } from '@/lib/fonts';
 import { siteConfig } from '@/lib/site-config';
@@ -31,14 +30,12 @@ export const metadata: Metadata = {
 
 const RootLayout = ({ children }: PropsWithChildren) => {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="dark" suppressHydrationWarning>
       <body className={cn('min-h-screen font-sans', fonts)}>
-        <ThemeProvider defaultTheme="dark" attribute="class">
-          <ActiveSectionProvider>
-            {children}
-            <Toaster position="bottom-left" />
-          </ActiveSectionProvider>
-        </ThemeProvider>
+        <ActiveSectionProvider>
+          {children}
+          <Toaster position="bottom-left" />
+        </ActiveSectionProvider>
       </body>
     </html>
   );
