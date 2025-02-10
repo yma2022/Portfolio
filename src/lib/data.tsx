@@ -43,8 +43,9 @@ export const projectsData = [
       'A genAI assisted counseling platform for high school students.',
     technologies: ['React Native', 'Node.js', 'PostgreSQL', 'NativeWind'],
     links: {
+      preview: 'https://www.example.com',
       github: 'https://github.com/yma2022/',
-      githubApi: 'https://api.github.com/repos/yma2022/AI_for_Robotics',
+      githubApi: 'https://api.github.com/repos/yma2022/',
     },
   },
   {
@@ -60,6 +61,7 @@ export const projectsData = [
       'OpenAI Gym',
     ],
     links: {
+      preview: 'https://www.example.com',
       github: 'https://github.com/yma2022/CS7641_Machine_Learning',
       githubApi: 'https://api.github.com/repos/yma2022/CS7641_Machine_Learning',
     },
