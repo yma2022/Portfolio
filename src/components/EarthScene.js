@@ -90,8 +90,8 @@ const EarthScene = () => {
 
     // Load world map and cities data
     Promise.all([
-      fetch('/Portfolio/world-110m.json').then((res) => res.json()),
-      fetch('/Portfolio/cities.json').then((res) => res.json()),
+      fetch('./world-110m.json').then((res) => res.json()),
+      fetch('./cities.json').then((res) => res.json()),
     ]).then(([worldData, citiesData]) => {
       const countries = feature(
         worldData,
