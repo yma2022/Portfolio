@@ -18,6 +18,12 @@ const Home = async () => {
 
   return (
     <>
+      {/* Umami Analytics */}
+      <Script
+        src="https://cloud.umami.is/script.js"
+        data-website-id="89e3cea4-922d-41db-ae7f-ccf75a6310bd"
+        strategy="afterInteractive"
+      />
       {/* Google Analytics */}
       <Script
         async
