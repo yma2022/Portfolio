@@ -40,9 +40,9 @@ const Home = async () => {
       </Script>
       <div className="container flex flex-col items-center">
         <Intro />
-        <About />
         <Projects starsCount={starsCount} />
         <Experience />
+        <About />
         <Footer />
       </div>
     </>
