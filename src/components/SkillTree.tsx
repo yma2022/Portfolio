@@ -252,6 +252,7 @@ const TechSkillsTree = () => {
       .attr('class', 'node')
       .attr('r', 8)
       .attr('fill', (d) => color(d.group.toString()))
+      .style('touch-action', 'none')
       .call(drag(simulation)); // attach the drag behavior
 
     // === 7) (Optional) Add Text Labels ===
