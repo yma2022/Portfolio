@@ -44,7 +44,7 @@ export const Intro = () => {
     <section
       ref={ref}
       id="home"
-      className="my-10 flex h-screen w-full scroll-mt-96 flex-col items-center gap-4 text-center sm:mt-10"
+      className="my-5 flex h-screen w-full scroll-mt-96 flex-col items-center gap-4 text-center sm:mt-10"
     >
       <motion.h1
         initial={{ opacity: 0, y: 100 }}
@@ -87,7 +87,7 @@ export const Intro = () => {
           </a>
         </Button>
       </motion.div>
-      <div className="mt-[40px]  max-w-2xl text-center leading-7">
+      <div className="mt-2 max-w-2xl text-center leading-7 sm:mt-[40px]  ">
         <HoverableParagraph text="I’m Youlong Ma, a self-driven full-stack developer eager for new opportunities to grow and make a meaningful impact. I thrive on tackling challenging problems and building robust solutions." />
 
         <HoverableParagraph text="Over the years, I’ve worked with Java, Python, Go, React Native, TypeScript, AWS, PostgreSQL, and gRPC—delivering scalable software for AI-driven education platforms, compiler development, and various system architectures." />

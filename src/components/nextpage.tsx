@@ -14,7 +14,7 @@ export const NextPage = ({ page }: NextPageProps) => {
         variant="secondary"
         size="icon"
         asChild
-        className="mt-24 bg-transparent"
+        className="bg-transparent sm:mt-24 "
       >
         <a href={page}>
           <Icons.chevronDown className="size-10" />
