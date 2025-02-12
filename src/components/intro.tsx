@@ -4,8 +4,9 @@ import { motion } from 'framer-motion';
 import dynamic from 'next/dynamic';
 
 import { Button } from '@/components/button';
+import EmailReveal from '@/components/email';
 import { Icons } from '@/components/icons';
-import { TypingText } from '@/hooks/typing-text';
+import { NextPage } from '@/components/nextpage';
 import { useSectionInView } from '@/hooks/use-section-in-view';
 
 const EarthScene = dynamic(() => import('../components/EarthScene'), {
@@ -20,7 +21,12 @@ export const Intro = () => {
     const words = text.split(' ');
 
     return (
-      <p className="mb-4">
+      <motion.p
+        initial={{ opacity: 0, y: 10 }} // Start faded out & slightly lower
+        animate={{ opacity: 1, y: 0 }} // Fade in & move up
+        transition={{ duration: 1.5, ease: 'easeOut' }} // Smooth transition
+        className="mb-4"
+      >
         {words.map((word, index) => (
           <span
             key={index}
@@ -30,7 +36,7 @@ export const Intro = () => {
             {word}
           </span>
         ))}
-      </p>
+      </motion.p>
     );
   }
 
@@ -43,9 +49,9 @@ export const Intro = () => {
       <motion.h1
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-3xl font-bold leading-tight tracking-tighter sm:text-4xl"
+        className="mb-4 text-3xl font-bold leading-tight tracking-tighter sm:text-4xl"
       >
-        <TypingText text="Youlong Ma" />
+        <span>Youlong Ma</span>
       </motion.h1>
       <motion.div
         initial={{ opacity: 0, y: 100 }}
@@ -65,11 +71,7 @@ export const Intro = () => {
             Download CV <Icons.download className="ml-2 size-4" />
           </a>
         </Button>
-        <Button variant="secondary" size="icon" asChild>
-          <a href="mailto:youlong.ma@gmail.com" aria-label="Mail" download>
-            <Icons.mail className="size-6" />
-          </a>
-        </Button>
+        <EmailReveal />
         <Button variant="secondary" size="icon" asChild>
           <a
             href="https://www.linkedin.com/in/youlong-ma/"
@@ -85,13 +87,14 @@ export const Intro = () => {
           </a>
         </Button>
       </motion.div>
-      <div className="mt-[150px]  max-w-2xl text-center leading-7">
+      <div className="mt-[40px]  max-w-2xl text-center leading-7">
         <HoverableParagraph text="I’m Youlong Ma, a self-driven full-stack developer eager for new opportunities to grow and make a meaningful impact. I thrive on tackling challenging problems and building robust solutions." />
 
         <HoverableParagraph text="Over the years, I’ve worked with Java, Python, Go, React Native, TypeScript, AWS, PostgreSQL, and gRPC—delivering scalable software for AI-driven education platforms, compiler development, and various system architectures." />
 
         <HoverableParagraph text="I’m always exploring emerging technologies, sharing best practices, and pushing myself to excel. If you’re looking for a motivated engineer who loves solving complex issues, let’s connect!" />
       </div>
+      <NextPage page="#projects" />
       <EarthScene />
     </section>
   );
