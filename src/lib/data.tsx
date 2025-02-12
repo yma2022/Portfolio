@@ -26,14 +26,15 @@ export const links = [
 export const projectsData = [
   {
     image: '/projects/socialhub.svg',
-    title: 'Personal Portfolio',
+    title: 'Agentic Doc Retrieval',
     description:
-      'My personal portfolio landing page. Built with Next.js and Tailwind CSS.',
-    technologies: ['Next.js', 'TypeScript', 'Three.js', 'd3.js', 'Tailwind'],
+      'A document search project leveraging agentic LLMs for efficient recall retrieval. It quickly identifies FDA-regulated product recalls since 2009 using natural language queries.',
+    technologies: ['Python', 'LangChain', 'LangGraph', 'OpenAI'],
     links: {
-      preview: '',
-      github: 'https://github.com/yma2022/Portfolio',
-      githubApi: 'https://api.github.com/repos/yma2022/Portfolio',
+      preview:
+        'https://github.com/yma2022/SearchFDARecalls/blob/main/README.md',
+      github: 'https://github.com/yma2022/SearchFDARecalls',
+      githubApi: 'https://api.github.com/repos/yma2022/SearchFDARecalls',
     },
   },
   {
@@ -50,21 +51,21 @@ export const projectsData = [
   },
   {
     image: '/projects/audiophile.svg',
-    title: 'Machine Learning Mastery',
+    title: 'AI Techniques for Robotics',
     description:
-      'Implemented and tuned algorithms such as decision trees, neural networks, genetic algorithms, and manifold learning, then showcased interesting outcomes through empirical demos.',
+      'Developed and implemented advanced robotics algorithms, including Kalman filters for object tracking, particle filters for satellite localization, PID control for drone stability, search algorithms for warehouse navigation, and GraphSLAM for autonomous exploration. Demonstrated real-time decision-making and adaptability through interactive simulations.',
     technologies: [
       'Python',
-      'Scikit-learn',
       'Numpy',
-      'Pandas',
       'Matplotlib',
-      'OpenAI Gym',
+      'SLAM',
+      'Dynamic Programming',
+      'Dijkstra',
     ],
     links: {
-      preview: 'https://github.com/yma2022/CS7641_Machine_Learning',
-      github: 'https://github.com/yma2022/CS7641_Machine_Learning',
-      githubApi: 'https://api.github.com/repos/yma2022/CS7641_Machine_Learning',
+      preview: 'https://github.com/yma2022/AI_for_Robotics/blob/main/README.md',
+      github: 'https://github.com/yma2022/AI_for_Robotics',
+      githubApi: 'https://api.github.com/repos/yma2022/AI_for_Robotics',
     },
   },
 ] as const;
