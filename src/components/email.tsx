@@ -24,7 +24,7 @@ const EmailReveal = () => {
         onClick={() => setShowEmail((prev) => !prev)}
         aria-label="Reveal Email"
       >
-        <Icons.mail className="size-6" />
+        <Icons.mail className="size-6 hover:animate-bounce" />
       </Button>
 
       {/* Fancy Animated Email Popup */}
