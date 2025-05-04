@@ -26,6 +26,18 @@ export const links = [
 export const projectsData = [
   {
     image: '/projects/socialhub.svg',
+    title: 'AI Stock Agent',
+    description:
+      'A stock trading agent that uses LLMs to make trading decisions based on historical data, company fundamentals, and market news.',
+    technologies: ['Python', 'LangChain', 'LangGraph', 'OpenAI', 'Polygon'],
+    links: {
+      preview: 'https://github.com/yma2022/stockAI/blob/main/README.md',
+      github: 'https://github.com/yma2022/stockAI',
+      githubApi: 'https://api.github.com/repos/yma2022/stockAI',
+    },
+  },
+  {
+    image: '/projects/socialhub.svg',
     title: 'Agentic Doc Retrieval',
     description:
       'A document search project leveraging agentic LLMs for efficient recall retrieval. It quickly identifies FDA-regulated product recalls since 2009 using natural language queries.',
@@ -53,7 +65,7 @@ export const projectsData = [
     image: '/projects/audiophile.svg',
     title: 'AI Techniques for Robotics',
     description:
-      'Developed and implemented advanced robotics algorithms, including Kalman filters for object tracking, particle filters for satellite localization, PID control for drone stability, search algorithms for warehouse navigation, and GraphSLAM for autonomous exploration. Demonstrated real-time decision-making and adaptability through interactive simulations.',
+      'Developed and implemented advanced robotics algorithms for autonomous exploration. Demonstrated real-time decision-making and adaptability through interactive simulations.',
     technologies: [
       'Python',
       'Numpy',
