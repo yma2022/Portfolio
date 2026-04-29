@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
@@ -18,62 +18,71 @@ const EarthScene = dynamic(() => import('../components/EarthScene'), {
 
 export const Intro = () => {
   const { ref } = useSectionInView('Home');
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  function HoverableParagraph({ text }: { text: string }) {
-    // Split the text into words by space
-    const words = text.split(' ');
-
-    return (
-      <motion.p
-        initial={{ opacity: 0, y: 10 }} // Start faded out & slightly lower
-        animate={{ opacity: 1, y: 0 }} // Fade in & move up
-        transition={{ duration: 1.5, ease: 'easeOut' }} // Smooth transition
-        className="mb-4"
-      >
-        {words.map((word, index) => (
-          <span
-            key={index}
-            className="transition-colors hover:text-gray-300"
-            style={{ display: 'inline-block', marginRight: '4px' }}
-          >
-            {word}
-          </span>
-        ))}
-      </motion.p>
-    );
-  }
+  const [isLoaded, setIsLoaded] = useState(true);
 
   return (
     <>
       <section
         ref={ref}
         id="home"
-        className="my-5 flex h-screen w-full scroll-mt-96 flex-col items-center gap-4 text-center sm:mt-10"
+        className="flex h-screen w-full scroll-mt-96 flex-col items-center justify-center gap-6 text-center"
       >
         {!isLoaded ? (
           <LoadingScreen onComplete={() => setIsLoaded(true)} />
         ) : (
           <>
             <motion.h1
-              initial={{ opacity: 0, y: 100 }}
+              initial={{ opacity: 0, y: 60 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mb-4 text-3xl font-bold leading-tight tracking-tighter sm:text-4xl"
+              transition={{ duration: 0.7, ease: 'easeOut' }}
+              className="flex flex-wrap justify-center text-4xl font-bold leading-tight tracking-tighter sm:text-6xl"
             >
-              <span>Youlong Ma</span>
+              {'Youlong Ma'.split('').map((char, i) => (
+                <motion.span
+                  key={i}
+                  whileHover={{ scale: 1.4 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+                  style={{
+                    display: 'inline-block',
+                    whiteSpace: 'pre',
+                    color: 'hsl(0 0% 98%)',
+                  }}
+                >
+                  {char}
+                </motion.span>
+              ))}
             </motion.h1>
-            <motion.div
-              initial={{ opacity: 0, y: 100 }}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{
-                delay: 0.1,
-              }}
-              className="flex flex-row gap-2"
+              transition={{ delay: 0.15, duration: 0.8, ease: 'easeOut' }}
+              className="flex flex-wrap justify-center gap-x-[0.05em] text-sm font-medium uppercase tracking-widest"
+            >
+              {'Full-Stack Engineer & AI Developer'.split('').map((char, i) => (
+                <motion.span
+                  key={i}
+                  whileHover={{ scale: 1.4, color: 'hsl(var(--brand))' }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+                  style={{
+                    display: 'inline-block',
+                    whiteSpace: 'pre',
+                    color: 'hsl(var(--brand))',
+                  }}
+                >
+                  {char}
+                </motion.span>
+              ))}
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.7, ease: 'easeOut' }}
+              className="flex flex-row flex-wrap justify-center gap-3"
             >
               <Button
-                variant="secondary"
+                variant="default"
                 size="lg"
-                className="hidden sm:flex"
+                className="bg-brand hover:bg-brand/90 hidden text-white sm:flex"
                 asChild
               >
                 <a href="/yma2022.pdf" download>
@@ -85,7 +94,6 @@ export const Intro = () => {
                 <a
                   href="https://www.linkedin.com/in/youlong-ma/"
                   aria-label="Linkedin"
-                  download
                 >
                   <Icons.linkedin className="size-6 hover:animate-bounce" />
                 </a>
@@ -96,14 +104,7 @@ export const Intro = () => {
                 </a>
               </Button>
             </motion.div>
-            <div className="mt-2 max-w-2xl text-center leading-7 sm:mt-[40px]  ">
-              <HoverableParagraph text="I’m Youlong Ma, a self-driven full-stack developer eager for new opportunities to grow and make a meaningful impact. I thrive on tackling challenging problems and building robust solutions." />
-
-              <HoverableParagraph text="Over the years, I’ve worked with Java, Python, Go, React Native, TypeScript, AWS, PostgreSQL, and gRPC—delivering scalable software for AI-driven education platforms, compiler development, and various system architectures." />
-
-              <HoverableParagraph text="I’m always exploring emerging technologies, sharing best practices, and pushing myself to excel. If you’re looking for a motivated engineer who loves solving complex issues, let’s connect!" />
-            </div>
-            <NextPage page="#projects" />
+            <NextPage page="#bio" />
           </>
         )}
         <EarthScene />

@@ -80,6 +80,7 @@ const EarthScene = () => {
       1000
     );
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setClearColor(0x000000, 0);
 
     renderer.setSize(window.innerWidth, window.innerHeight);
     mountRef.current.appendChild(renderer.domElement);
@@ -101,9 +102,9 @@ const EarthScene = () => {
 
       // Create country borders with a glowing effect
       const lineMaterial = new THREE.LineBasicMaterial({
-        color: 0x000000, // Glowing white color
+        color: 0xffffff,
         transparent: true,
-        opacity: 0.0,
+        opacity: 0.08,
       });
 
       const particles = new THREE.BufferGeometry();
@@ -174,8 +175,8 @@ const EarthScene = () => {
         new THREE.Float32BufferAttribute(cityPositions, 3)
       );
 
-      // Red glowing circular city particles
-      const cityParticleMaterial = createParticleMaterial(0xff0000);
+      // Brand indigo glowing circular city particles
+      const cityParticleMaterial = createParticleMaterial(0x6366f1);
       const cityParticleSystem = new THREE.Points(
         cityParticles,
         cityParticleMaterial
@@ -186,7 +187,7 @@ const EarthScene = () => {
     // Animation loop
     const animate = () => {
       requestAnimationFrame(animate);
-      globeRef.current.rotation.y += 0.002;
+      globeRef.current.rotation.y += 0.0005;
       renderer.render(scene, camera);
     };
 
@@ -201,10 +202,12 @@ const EarthScene = () => {
 
     window.addEventListener('resize', handleResize);
 
+    const mountNode = mountRef.current;
+
     return () => {
       window.removeEventListener('resize', handleResize);
       renderer.dispose();
-      if (mountRef.current) mountRef.current.removeChild(renderer.domElement);
+      if (mountNode) mountNode.removeChild(renderer.domElement);
     };
   }, []);
 

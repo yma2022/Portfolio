@@ -1,6 +1,7 @@
 import Script from 'next/script';
 
 import { About } from '@/components/about';
+import { Bio } from '@/components/bio';
 import { Experience } from '@/components/experience';
 import { Footer } from '@/components/footer';
 import { Intro } from '@/components/intro';
@@ -40,6 +41,7 @@ const Home = async () => {
       </Script>
       <div className="container flex flex-col items-center">
         <Intro />
+        <Bio />
         <Projects starsCount={starsCount} />
         <Experience />
         <About />

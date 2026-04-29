@@ -4,6 +4,7 @@ import { PropsWithChildren } from 'react';
 import type { Metadata } from 'next';
 
 import { ActiveSectionProvider } from '@/components/active-section-provider';
+import { Navbar } from '@/components/navbar';
 import { Toaster } from '@/components/toaster';
 import { fonts } from '@/lib/fonts';
 import { siteConfig } from '@/lib/site-config';
@@ -33,6 +34,7 @@ const RootLayout = ({ children }: PropsWithChildren) => {
     <html lang="en" className="dark" suppressHydrationWarning>
       <body className={cn('min-h-screen font-sans', fonts)}>
         <ActiveSectionProvider>
+          <Navbar />
           {children}
           <Toaster position="bottom-left" />
         </ActiveSectionProvider>

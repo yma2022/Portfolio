@@ -40,7 +40,7 @@ export const Project = ({ project, index, starsCount }: TProps) => {
         once: true,
       }}
       custom={index}
-      className="bg-secondary flex flex-col items-center rounded p-5 text-center md:w-1/3"
+      className="bg-secondary flex flex-col items-center rounded p-5 text-center"
     >
       <h3 className="my-2 text-lg font-medium">{title}</h3>
       <p className="text-muted-foreground">{description}</p>

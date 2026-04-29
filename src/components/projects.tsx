@@ -12,7 +12,7 @@ type TProps = {
 };
 
 export const Projects = ({ starsCount }: TProps) => {
-  const { ref } = useSectionInView('Projects');
+  const { ref } = useSectionInView('Projects', 0.2);
 
   return (
     <section ref={ref} id="projects" className="my-10 scroll-mt-28">
@@ -34,7 +34,7 @@ export const Projects = ({ starsCount }: TProps) => {
           content="Projects I worked on. Each of them containing its own case study."
         />
       </motion.div>
-      <div className="flex flex-col gap-8 md:flex-row">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {projectsData.map((project, index) => (
           <Project
             key={project.title}

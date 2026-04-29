@@ -7,7 +7,7 @@ export const links = [
   },
   {
     name: 'About',
-    hash: '#about',
+    hash: '#bio',
   },
   {
     name: 'Projects',
@@ -18,8 +18,8 @@ export const links = [
     hash: '#experience',
   },
   {
-    name: 'Contact',
-    hash: '#contact',
+    name: 'Skills',
+    hash: '#about',
   },
 ] as const;
 
@@ -84,11 +84,18 @@ export const projectsData = [
 
 export const experiencesData = [
   {
-    title: 'EduPolaris AI, Tech Lead & Software Engineer',
+    title: 'Numo, Software Engineer',
+    location: 'Pittsburgh, PA',
+    description:
+      'Building and scaling financial technology products as a software engineer, contributing to backend systems and platform reliability.',
+    date: '2025 - present',
+  },
+  {
+    title: 'EduPolaris AI, Tech Lead &Software Engineer',
     location: 'Remote',
     description:
       'Led the development of an AI-driven education platform using Go, PostgreSQL, and gRPC. Delivered system architecture improvements for high performance and scalability, advancing product capabilities and user engagement.',
-    date: '2024 - present',
+    date: '2024 - 2025',
   },
   {
     title: 'Internship at Amazon',
@@ -107,22 +114,22 @@ export const experiencesData = [
 ] as const;
 
 export const skillsData = [
-  { icon: <Icons.html className="size-12" /> },
-  { icon: <Icons.css className="size-12" /> },
-  { icon: <Icons.tailwind className="size-12" /> },
-  { icon: <Icons.javascript className="size-12" /> },
-  { icon: <Icons.typescript className="size-12" /> },
-  { icon: <Icons.react className="size-12" /> },
-  { icon: <Icons.nextjs className="size-12" /> },
-  { icon: <Icons.docker className="size-12" /> },
-  { icon: <Icons.java className="size-12" /> },
-  { icon: <Icons.nodejs className="size-12" /> },
-  { icon: <Icons.d3js className="size-12" /> },
-  { icon: <Icons.python className="size-12" /> },
-  { icon: <Icons.mysql className="size-12" /> },
-  { icon: <Icons.postgresql className="size-12" /> },
-  { icon: <Icons.aws className="size-12" /> },
-  { icon: <Icons.cpp className="size-12" /> },
-  { icon: <Icons.git className="size-12" /> },
-  { icon: <Icons.k8s className="size-12" /> },
+  { icon: <Icons.html className="size-12" />, name: 'HTML' },
+  { icon: <Icons.css className="size-12" />, name: 'CSS' },
+  { icon: <Icons.tailwind className="size-12" />, name: 'Tailwind' },
+  { icon: <Icons.javascript className="size-12" />, name: 'JavaScript' },
+  { icon: <Icons.typescript className="size-12" />, name: 'TypeScript' },
+  { icon: <Icons.react className="size-12" />, name: 'React' },
+  { icon: <Icons.nextjs className="size-12" />, name: 'Next.js' },
+  { icon: <Icons.docker className="size-12" />, name: 'Docker' },
+  { icon: <Icons.java className="size-12" />, name: 'Java' },
+  { icon: <Icons.nodejs className="size-12" />, name: 'Node.js' },
+  { icon: <Icons.d3js className="size-12" />, name: 'D3.js' },
+  { icon: <Icons.python className="size-12" />, name: 'Python' },
+  { icon: <Icons.mysql className="size-12" />, name: 'MySQL' },
+  { icon: <Icons.postgresql className="size-12" />, name: 'PostgreSQL' },
+  { icon: <Icons.aws className="size-12" />, name: 'AWS' },
+  { icon: <Icons.cpp className="size-12" />, name: 'C++' },
+  { icon: <Icons.git className="size-12" />, name: 'Git' },
+  { icon: <Icons.k8s className="size-12" />, name: 'Kubernetes' },
 ] as const;
