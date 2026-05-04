@@ -28,8 +28,15 @@ export const projectsData = [
     image: '/projects/socialhub.svg',
     title: 'AI Stock Agent',
     description:
-      'A stock trading agent that uses LLMs to make trading decisions based on historical data, company fundamentals, and market news.',
-    technologies: ['Python', 'LangChain', 'LangGraph', 'OpenAI', 'Polygon'],
+      'A web-based stock analysis tool that fetches real-time price data, news, and financial metrics for any publicly traded company, then uses an AI agent to generate comprehensive investment insights via a Flask web interface.',
+    technologies: [
+      'Python',
+      'Flask',
+      'LangChain',
+      'OpenAI',
+      'Polygon.io',
+      'Bootstrap',
+    ],
     links: {
       preview: 'https://github.com/yma2022/stockAI/blob/main/README.md',
       github: 'https://github.com/yma2022/stockAI',
@@ -40,8 +47,15 @@ export const projectsData = [
     image: '/projects/socialhub.svg',
     title: 'Agentic Doc Retrieval',
     description:
-      'A document search project leveraging agentic LLMs for efficient recall retrieval. It quickly identifies FDA-regulated product recalls since 2009 using natural language queries.',
-    technologies: ['Python', 'LangChain', 'LangGraph', 'OpenAI'],
+      'An agentic LLM-powered search tool that finds FDA-regulated product recalls since 2009 from natural language queries. Processes recall documents with sub-second response time using RAG and LangChain agent tooling.',
+    technologies: [
+      'Python',
+      'LangChain',
+      'LangGraph',
+      'OpenAI',
+      'RAG',
+      'Vector Embeddings',
+    ],
     links: {
       preview:
         'https://github.com/yma2022/SearchFDARecalls/blob/main/README.md',
@@ -51,33 +65,40 @@ export const projectsData = [
   },
   {
     image: '/projects/nextstarter.svg',
-    title: 'Ask Eddie',
+    title: 'EduAgent',
     description:
-      'Contributed to its end-to-end system design—integrating AI language models, data-driven insights, and scalable backend services to deliver expert-level counseling at a fraction of traditional costs.',
-    technologies: ['React Native', 'Node.js', 'PostgreSQL', 'NativeWind'],
+      'A multi-agent education system where an Analyst and Planner agent debate a personalized learning path, generate a structured syllabus, and an Instructor agent teaches each section interactively—with progress persisted to SQLite and covered by 99 automated tests.',
+    technologies: [
+      'Python',
+      'LangGraph',
+      'LangChain',
+      'OpenAI',
+      'SQLite',
+      'Pydantic',
+      'Pytest',
+    ],
     links: {
-      preview: 'https://apps.apple.com/us/app/ask-eddie/id6738869004',
-      github: 'https://github.com/yma2022/',
-      githubApi: 'https://api.github.com/repos/yma2022/',
+      preview: 'https://github.com/yma2022/EduAgent/blob/main/README.md',
+      github: 'https://github.com/yma2022/EduAgent',
+      githubApi: 'https://api.github.com/repos/yma2022/EduAgent',
     },
   },
   {
     image: '/projects/audiophile.svg',
-    title: 'AI Techniques for Robotics',
+    title: 'Ask Eddie',
     description:
-      'Developed and implemented advanced robotics algorithms for autonomous exploration. Demonstrated real-time decision-making and adaptability through interactive simulations.',
+      'Contributed to its end-to-end system design—integrating AI language models, data-driven insights, and scalable backend services to deliver expert-level counseling at a fraction of traditional costs.',
     technologies: [
-      'Python',
-      'Numpy',
-      'Matplotlib',
-      'SLAM',
-      'Dynamic Programming',
-      'Dijkstra',
+      'React Native',
+      'Node.js',
+      'PostgreSQL',
+      'NativeWind',
+      'OpenAI',
     ],
     links: {
-      preview: 'https://github.com/yma2022/AI_for_Robotics/blob/main/README.md',
-      github: 'https://github.com/yma2022/AI_for_Robotics',
-      githubApi: 'https://api.github.com/repos/yma2022/AI_for_Robotics',
+      preview: 'https://apps.apple.com/us/app/ask-eddie/id6738869004',
+      github: 'https://github.com/yma2022/',
+      githubApi: 'https://api.github.com/repos/yma2022/',
     },
   },
 ] as const;
