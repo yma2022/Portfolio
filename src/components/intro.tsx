@@ -41,7 +41,7 @@ export const Intro = () => {
               {!avatarError ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
-                  src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/avatar.jpg`}
+                  src="/avatar.jpg"
                   alt="Youlong Ma"
                   className="size-full object-cover"
                   onError={() => setAvatarError(true)}
