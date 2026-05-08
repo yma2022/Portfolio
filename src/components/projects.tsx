@@ -15,7 +15,7 @@ export const Projects = ({ starsCount }: TProps) => {
   const { ref } = useSectionInView('Projects', 0.2);
 
   return (
-    <section ref={ref} id="projects" className="my-10 scroll-mt-28">
+    <section ref={ref} id="projects" className="my-20 scroll-mt-28">
       <motion.div
         initial={{ opacity: 0, y: 100 }}
         whileInView={{

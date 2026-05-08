@@ -4,6 +4,13 @@ import { motion } from 'framer-motion';
 
 import { skillsData } from '@/lib/data';
 
+const categoryColor: Record<string, string> = {
+  frontend: 'text-blue-400',
+  backend: 'text-emerald-400',
+  aiml: 'text-violet-400',
+  devops: 'text-amber-400',
+};
+
 const fadeInAnimationVariants = {
   initial: {
     opacity: 0,
@@ -21,7 +28,7 @@ const fadeInAnimationVariants = {
 export const Skills = () => {
   return (
     <div className="mt-10 flex w-full flex-wrap justify-center gap-6 px-5 sm:px-0">
-      {skillsData.map(({ icon, name }, index) => (
+      {skillsData.map(({ icon, name, category }, index) => (
         <motion.div
           key={index}
           variants={fadeInAnimationVariants}
@@ -34,7 +41,7 @@ export const Skills = () => {
           className="flex flex-col items-center gap-2"
         >
           {icon}
-          <span className="text-muted-foreground text-xs font-medium">
+          <span className={`text-xs font-medium ${categoryColor[category]}`}>
             {name}
           </span>
         </motion.div>

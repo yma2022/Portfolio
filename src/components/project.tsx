@@ -51,21 +51,36 @@ export const Project = ({ project, index, starsCount }: TProps) => {
           </span>
         ))}
       </div>
-      <div className="mt-2 flex">
-        <Button variant="outline" asChild className="mr-2 px-5">
-          <a href={links.preview} aria-label="preview project">
-            <Icons.preview className="size-5" />
+      <div className="mt-2 flex gap-2">
+        <Button variant="outline" size="sm" asChild className="gap-1.5">
+          <a
+            href={links.preview}
+            aria-label="Live demo"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Icons.preview className="size-4" />
           </a>
         </Button>
-        <Button variant="outline" asChild className="mr-2 px-5">
-          <a href={links.github} aria-label="github">
-            <Icons.githubOutline className="size-5" />
+        <Button variant="outline" size="sm" asChild className="gap-1.5">
+          <a
+            href={links.github}
+            aria-label="Source code"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Icons.githubOutline className="size-4" />
           </a>
         </Button>
         {starsCount[index] > 100 && (
-          <Button asChild className="px-5">
-            <a href={links.github} aria-label="github">
-              <Icons.star className="mr-2 size-5" />
+          <Button size="sm" asChild className="gap-1.5">
+            <a
+              href={links.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="github stars"
+            >
+              <Icons.star className="size-4" />
               <span className="font-bold">{starsCount[index]}</span>
             </a>
           </Button>

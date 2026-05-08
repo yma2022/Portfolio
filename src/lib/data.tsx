@@ -135,22 +135,119 @@ export const experiencesData = [
 ] as const;
 
 export const skillsData = [
-  { icon: <Icons.html className="size-12" />, name: 'HTML' },
-  { icon: <Icons.css className="size-12" />, name: 'CSS' },
-  { icon: <Icons.tailwind className="size-12" />, name: 'Tailwind' },
-  { icon: <Icons.javascript className="size-12" />, name: 'JavaScript' },
-  { icon: <Icons.typescript className="size-12" />, name: 'TypeScript' },
-  { icon: <Icons.react className="size-12" />, name: 'React' },
-  { icon: <Icons.nextjs className="size-12" />, name: 'Next.js' },
-  { icon: <Icons.docker className="size-12" />, name: 'Docker' },
-  { icon: <Icons.java className="size-12" />, name: 'Java' },
-  { icon: <Icons.nodejs className="size-12" />, name: 'Node.js' },
-  { icon: <Icons.d3js className="size-12" />, name: 'D3.js' },
-  { icon: <Icons.python className="size-12" />, name: 'Python' },
-  { icon: <Icons.mysql className="size-12" />, name: 'MySQL' },
-  { icon: <Icons.postgresql className="size-12" />, name: 'PostgreSQL' },
-  { icon: <Icons.aws className="size-12" />, name: 'AWS' },
-  { icon: <Icons.cpp className="size-12" />, name: 'C++' },
-  { icon: <Icons.git className="size-12" />, name: 'Git' },
-  { icon: <Icons.k8s className="size-12" />, name: 'Kubernetes' },
+  {
+    icon: <Icons.html className="size-12" />,
+    name: 'HTML',
+    category: 'frontend',
+  },
+  {
+    icon: <Icons.css className="size-12" />,
+    name: 'CSS',
+    category: 'frontend',
+  },
+  {
+    icon: <Icons.tailwind className="size-12" />,
+    name: 'Tailwind',
+    category: 'frontend',
+  },
+  {
+    icon: <Icons.javascript className="size-12" />,
+    name: 'JavaScript',
+    category: 'frontend',
+  },
+  {
+    icon: <Icons.typescript className="size-12" />,
+    name: 'TypeScript',
+    category: 'frontend',
+  },
+  {
+    icon: <Icons.react className="size-12" />,
+    name: 'React',
+    category: 'frontend',
+  },
+  {
+    icon: <Icons.nextjs className="size-12" />,
+    name: 'Next.js',
+    category: 'frontend',
+  },
+  {
+    icon: <Icons.nodejs className="size-12" />,
+    name: 'Node.js',
+    category: 'backend',
+  },
+  {
+    icon: <Icons.java className="size-12" />,
+    name: 'Java',
+    category: 'backend',
+  },
+  {
+    icon: <Icons.spring className="size-12" />,
+    name: 'Spring',
+    category: 'backend',
+  },
+  { icon: <Icons.go className="size-12" />, name: 'Go', category: 'backend' },
+  { icon: <Icons.cpp className="size-12" />, name: 'C++', category: 'backend' },
+  {
+    icon: <Icons.mysql className="size-12" />,
+    name: 'MySQL',
+    category: 'backend',
+  },
+  {
+    icon: <Icons.postgresql className="size-12" />,
+    name: 'PostgreSQL',
+    category: 'backend',
+  },
+  {
+    icon: <Icons.python className="size-12" />,
+    name: 'Python',
+    category: 'aiml',
+  },
+  { icon: <Icons.d3js className="size-12" />, name: 'D3.js', category: 'aiml' },
+  {
+    icon: <Icons.langchain className="size-12" />,
+    name: 'LangChain',
+    category: 'aiml',
+  },
+  {
+    icon: <Icons.langgraph className="size-12" />,
+    name: 'LangGraph',
+    category: 'aiml',
+  },
+  {
+    icon: <Icons.openai className="size-12" />,
+    name: 'OpenAI',
+    category: 'aiml',
+  },
+  {
+    icon: <Icons.docker className="size-12" />,
+    name: 'Docker',
+    category: 'devops',
+  },
+  { icon: <Icons.aws className="size-12" />, name: 'AWS', category: 'devops' },
+  { icon: <Icons.git className="size-12" />, name: 'Git', category: 'devops' },
+  {
+    icon: <Icons.k8s className="size-12" />,
+    name: 'Kubernetes',
+    category: 'devops',
+  },
+  {
+    icon: <Icons.atlassian className="size-12" />,
+    name: 'Atlassian',
+    category: 'devops',
+  },
+  {
+    icon: <Icons.datadog className="size-12" />,
+    name: 'Datadog',
+    category: 'devops',
+  },
+  {
+    icon: <Icons.postman className="size-12" />,
+    name: 'Postman',
+    category: 'devops',
+  },
+  {
+    icon: <Icons.terraform className="size-12" />,
+    name: 'Terraform',
+    category: 'devops',
+  },
 ] as const;

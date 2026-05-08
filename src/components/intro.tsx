@@ -19,6 +19,7 @@ const EarthScene = dynamic(() => import('../components/EarthScene'), {
 export const Intro = () => {
   const { ref } = useSectionInView('Home');
   const [isLoaded, setIsLoaded] = useState(true);
+  const [avatarError, setAvatarError] = useState(false);
 
   return (
     <>
@@ -31,6 +32,26 @@ export const Intro = () => {
           <LoadingScreen onComplete={() => setIsLoaded(true)} />
         ) : (
           <>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, ease: 'easeOut' }}
+              className="border-brand/40 ring-brand/10 relative size-28 overflow-hidden rounded-full border-2 ring-4"
+            >
+              {!avatarError ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/avatar.jpg`}
+                  alt="Youlong Ma"
+                  className="size-full object-cover"
+                  onError={() => setAvatarError(true)}
+                />
+              ) : (
+                <div className="bg-brand/20 text-brand flex size-full items-center justify-center text-2xl font-bold">
+                  YM
+                </div>
+              )}
+            </motion.div>
             <motion.h1
               initial={{ opacity: 0, y: 60 }}
               animate={{ opacity: 1, y: 0 }}

@@ -2,7 +2,7 @@
 
 import 'react-vertical-timeline-component/style.min.css';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import {
   VerticalTimeline,
@@ -23,6 +23,8 @@ const ExperienceCard = ({
   date,
 }: ExperienceItem) => {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.3 });
+  const [isExpanded, setIsExpanded] = useState(false);
+
   return (
     <VerticalTimelineElement
       visible={inView}
@@ -44,7 +46,17 @@ const ExperienceCard = ({
         {title}
       </h3>
       <p className="!mt-0 !font-normal">{location}</p>
-      <p className="text-muted-foreground !mt-1 !font-normal">{description}</p>
+      <p
+        className={`text-muted-foreground !mt-1 !font-normal ${!isExpanded ? 'line-clamp-1' : ''}`}
+      >
+        {description}
+      </p>
+      <button
+        onClick={() => setIsExpanded((v) => !v)}
+        className="text-brand mt-1 text-xs hover:underline"
+      >
+        {isExpanded ? 'Show less ↑' : 'Show more ↓'}
+      </button>
     </VerticalTimelineElement>
   );
 };
@@ -53,7 +65,7 @@ export const Experience = () => {
   const { ref: sectionRef } = useSectionInView('Experience', 0.2);
 
   return (
-    <section ref={sectionRef} id="experience" className="my-10 scroll-mt-28">
+    <section ref={sectionRef} id="experience" className="my-20 scroll-mt-28">
       <SectionHeading
         heading="Experience"
         content="Professional experience that I have accumulated over several years."
