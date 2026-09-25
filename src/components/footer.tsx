@@ -1,36 +1,44 @@
-import { Icons } from '@/components/icons';
+import Link from 'next/link';
 
-export const Footer = () => {
-  return (
-    <footer className="text-muted-foreground my-6 flex flex-col items-center gap-4 text-sm">
-      <div className="flex items-center gap-5">
-        <a
-          href="https://github.com/yma2022"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="GitHub"
-          className="hover:text-brand transition-colors"
-        >
-          <Icons.github className="size-5" />
-        </a>
-        <a
-          href="https://www.linkedin.com/in/youlong-ma/"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="LinkedIn"
-          className="hover:text-brand transition-colors"
-        >
-          <Icons.linkedin className="size-5" />
-        </a>
+import { assetPath } from '@/lib/asset-path';
+
+export const Footer = () => (
+  <footer id="contact" className="site-footer">
+    <div className="page-shell">
+      <p className="eyebrow">An open line</p>
+      <div className="footer-invitation">
+        <h2>
+          Good things start
+          <br />
+          with a conversation.
+        </h2>
         <a
           href="mailto:youlong.ma@gmail.com"
-          aria-label="Email"
-          className="hover:text-brand transition-colors"
+          className="contact-arrow"
+          aria-label="Email Youlong Ma"
         >
-          <Icons.mail className="size-5" />
+          ↗
         </a>
       </div>
-      <p>© {new Date().getFullYear()} Youlong Ma. All rights reserved.</p>
-    </footer>
-  );
-};
+      <div className="footer-links">
+        <a href="mailto:youlong.ma@gmail.com" className="footer-email">
+          youlong.ma@gmail.com
+        </a>
+        <div>
+          <a href="https://github.com/yma2022">GitHub ↗</a>
+          <a href="https://www.linkedin.com/in/youlong-ma/">LinkedIn ↗</a>
+          <a href={assetPath('/yma2022.pdf')} download>
+            Download CV ↓
+          </a>
+        </div>
+      </div>
+      <div className="footer-colophon">
+        <Link href="/" aria-label="Youlong Ma — back to home">
+          Youlong Ma <span>· A work in progress, by nature.</span>
+        </Link>
+        <Link href="#top">Back to top ↑</Link>
+        <span>© {new Date().getFullYear()}</span>
+      </div>
+    </div>
+  </footer>
+);

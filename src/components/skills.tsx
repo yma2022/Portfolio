@@ -1,51 +1,32 @@
-'use client';
+import { skillsData } from '@/lib/skills-data';
 
-import { motion } from 'framer-motion';
+const categories = [
+  { id: 'frontend', name: 'Frontend' },
+  { id: 'backend', name: 'Backend' },
+  { id: 'aiml', name: 'AI & data' },
+  { id: 'devops', name: 'Infrastructure & tools' },
+] as const;
 
-import { skillsData } from '@/lib/data';
-
-const categoryColor: Record<string, string> = {
-  frontend: 'text-blue-400',
-  backend: 'text-emerald-400',
-  aiml: 'text-violet-400',
-  devops: 'text-amber-400',
-};
-
-const fadeInAnimationVariants = {
-  initial: {
-    opacity: 0,
-    y: 100,
-  },
-  animate: (index: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay: 0.05 * index,
-    },
-  }),
-};
-
-export const Skills = () => {
-  return (
-    <div className="mt-10 flex w-full flex-wrap justify-center gap-6 px-5 sm:px-0">
-      {skillsData.map(({ icon, name, category }, index) => (
-        <motion.div
-          key={index}
-          variants={fadeInAnimationVariants}
-          initial="initial"
-          whileInView="animate"
-          viewport={{
-            once: true,
-          }}
-          custom={index}
-          className="flex flex-col items-center gap-2"
-        >
-          {icon}
-          <span className={`text-xs font-medium ${categoryColor[category]}`}>
-            {name}
-          </span>
-        </motion.div>
-      ))}
-    </div>
-  );
-};
+export const Skills = () => (
+  <div className="grid w-full grid-cols-1 gap-x-10 gap-y-12 sm:grid-cols-2">
+    {categories.map(({ id, name }) => (
+      <div key={id} className="border-t pt-5">
+        <h3 className="eyebrow mb-6">{name}</h3>
+        <ul className="flex flex-wrap gap-x-6 gap-y-5">
+          {skillsData
+            .filter((skill) => skill.category === id)
+            .map(({ icon, name: skill }) => (
+              <li key={skill} className="flex w-16 flex-col items-center gap-2">
+                <span aria-hidden="true" className="[&>svg]:size-9">
+                  {icon}
+                </span>
+                <span className="text-center text-xs leading-5 text-muted-foreground">
+                  {skill}
+                </span>
+              </li>
+            ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+);

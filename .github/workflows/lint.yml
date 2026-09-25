@@ -4,18 +4,51 @@ on:
   pull_request:
     branches:
       - main
+      - gh-pages
 
 jobs:
   lint:
     name: Eslint, Typescript, prettier
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
       - name: Install dependencies
-        run: npm install
+        run: npm ci
       - name: ESLint
         run: npm run lint
       - name: Type check
         run: npm run typecheck
       - name: Prettier
         run: npm run format:check
+
+  browser:
+    name: Static export and browser checks
+    needs: lint
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        base-path: ['', '/Portfolio']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Build and test
+        run: npm test
+        env:
+          TEST_BASE_PATH: ${{ matrix.base-path }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: browser-report-${{ strategy.job-index }}
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7

@@ -3,6 +3,7 @@ module.exports = {
   outDir: 'out',
   generateRobotsTxt: true,
   generateIndexSitemap: false,
+  exclude: ['/social-image.png'],
   robotsTxtOptions: {
     policies: [{ userAgent: '*', allow: '/' }],
   },

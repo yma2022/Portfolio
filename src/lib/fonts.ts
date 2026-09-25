@@ -1,7 +1,9 @@
-import { Inter } from 'next/font/google';
+import localFont from 'next/font/local';
 
-const fontSans = Inter({
-  subsets: ['latin'],
+const fontSans = localFont({
+  src: './fonts/Inter-latin.woff2',
+  weight: '100 900',
+  display: 'swap',
   variable: '--font-sans',
 });
 

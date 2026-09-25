@@ -1,123 +1,128 @@
-﻿'use client';
+'use client';
 
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 
-import { LoadingScreen } from './loading';
+import { useReducedMotion } from '@/hooks/use-reduced-motion';
 
-import { Button } from '@/components/button';
-import EmailReveal from '@/components/email';
-import { Icons } from '@/components/icons';
-import { NextPage } from '@/components/nextpage';
-import { useSectionInView } from '@/hooks/use-section-in-view';
-import { assetPath } from '@/lib/asset-path';
-
-const EarthScene = dynamic(() => import('../components/EarthScene'), {
+const EarthScene = dynamic(() => import('@/components/EarthScene'), {
   ssr: false,
 });
 
 export const Intro = () => {
-  const { ref } = useSectionInView('Home');
-  const [isLoaded, setIsLoaded] = useState(true);
-  const [avatarError, setAvatarError] = useState(false);
-
+  const [showGlobe, setShowGlobe] = useState(false);
+  const [globePaused, setGlobePaused] = useState(false);
+  const reducedMotion = useReducedMotion();
+  useEffect(() => {
+    if ('requestIdleCallback' in window) {
+      const idle = window.requestIdleCallback(() => setShowGlobe(true), {
+        timeout: 1500,
+      });
+      return () => window.cancelIdleCallback(idle);
+    }
+    const timer = setTimeout(() => setShowGlobe(true), 500);
+    return () => clearTimeout(timer);
+  }, []);
   return (
-    <>
-      <section
-        ref={ref}
-        id="home"
-        className="flex min-h-svh w-full scroll-mt-0 flex-col items-center justify-center gap-6 pb-12 pt-28 text-center"
-      >
-        {!isLoaded ? (
-          <LoadingScreen onComplete={() => setIsLoaded(true)} />
-        ) : (
-          <>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, ease: 'easeOut' }}
-              className="border-brand/40 ring-brand/10 relative size-28 overflow-hidden rounded-full border-2 ring-4"
+    <section id="home" aria-labelledby="intro-title" className="hero">
+      <div className="hero-copy">
+        <p className="eyebrow">
+          <span className="small-node" />
+          Youlong Ma / Software engineer
+        </p>
+        <h1 id="intro-title">
+          Connecting
+          <br /> ideas.
+          <br />
+          <span>
+            Building
+            <br className="desktop-break" /> systems.
+          </span>
+        </h1>
+        <p className="hero-description">
+          I build AI-powered tools and the systems behind them. Turning complex
+          problems into software people can use.
+        </p>
+        <Link href="/work/" className="primary-link">
+          Explore my work <span aria-hidden="true">↗</span>
+        </Link>
+      </div>
+      <div className="hero-atlas">
+        <div className="atlas-globe">
+          <svg
+            viewBox="0 0 600 600"
+            className="atlas-fallback"
+            aria-hidden="true"
+          >
+            <g fill="none" stroke="currentColor">
+              <circle cx="300" cy="300" r="215" />
+              <ellipse cx="300" cy="300" rx="105" ry="215" />
+              <ellipse cx="300" cy="300" rx="180" ry="215" />
+              <path d="M85 300H515M112 195H488M112 405H488M300 85V515" />
+              <ellipse
+                cx="300"
+                cy="300"
+                rx="260"
+                ry="110"
+                transform="rotate(-32 300 300)"
+                strokeDasharray="2 8"
+              />
+            </g>
+          </svg>
+          {showGlobe && <EarthScene paused={globePaused} />}
+        </div>
+        <svg
+          className="atlas-routes"
+          viewBox="0 0 600 600"
+          fill="none"
+          aria-hidden="true"
+        >
+          <circle
+            cx="300"
+            cy="300"
+            r="269"
+            stroke="currentColor"
+            opacity=".2"
+          />
+          <path
+            d="M25 170H133L205 242M405 185L490 100H575M350 410L430 490H574"
+            stroke="currentColor"
+            opacity=".6"
+          />
+          <g fill="#b1c2ff">
+            <circle cx="205" cy="242" r="4" />
+            <circle cx="405" cy="185" r="4" />
+            <circle cx="350" cy="410" r="4" />
+          </g>
+          <path
+            d="M290 24H310M300 14V34M290 576H310M300 566V586M14 300H34M24 290V310M566 300H586M576 290V310"
+            stroke="currentColor"
+            opacity=".5"
+          />
+        </svg>
+        <span className="atlas-label atlas-label-one">01 / Intelligence</span>
+        <span className="atlas-label atlas-label-two">02 / Systems</span>
+        <span className="atlas-label atlas-label-three">03 / Connection</span>
+        <div className="atlas-caption">
+          <span>FIELD STUDY — CONNECTED SYSTEMS</span>
+          {showGlobe && !reducedMotion && (
+            <button
+              type="button"
+              aria-pressed={globePaused}
+              onClick={() => setGlobePaused((value) => !value)}
             >
-              {!avatarError ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={assetPath('/avatar.jpg')}
-                  alt="Youlong Ma"
-                  className="size-full object-cover"
-                  onError={() => setAvatarError(true)}
-                />
-              ) : (
-                <div className="bg-brand/20 text-brand flex size-full items-center justify-center text-2xl font-bold">
-                  YM
-                </div>
-              )}
-            </motion.div>
-            <motion.h1
-              initial={{ opacity: 0, y: 60 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: 'easeOut' }}
-              className="flex flex-wrap justify-center text-4xl font-bold leading-tight tracking-tighter sm:text-6xl"
-            >
-              {'Youlong Ma'.split('').map((char, i) => (
-                <motion.span
-                  key={i}
-                  whileHover={{ scale: 1.4 }}
-                  transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-                  style={{
-                    display: 'inline-block',
-                    whiteSpace: 'pre',
-                    color: 'hsl(0 0% 98%)',
-                  }}
-                >
-                  {char}
-                </motion.span>
-              ))}
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.15, duration: 0.8, ease: 'easeOut' }}
-              className="text-brand max-w-sm text-sm font-medium uppercase leading-relaxed tracking-widest"
-            >
-              Full-Stack Engineer &amp; AI Developer
-            </motion.p>
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.7, ease: 'easeOut' }}
-              className="flex flex-row flex-wrap justify-center gap-3"
-            >
-              <Button
-                variant="default"
-                size="lg"
-                className="bg-brand hover:bg-brand/90 w-full text-white sm:w-auto"
-                asChild
-              >
-                <a href={assetPath('/yma2022.pdf')} download>
-                  Download CV <Icons.download className="ml-2 size-4" />
-                </a>
-              </Button>
-              <EmailReveal />
-              <Button variant="secondary" size="icon" asChild>
-                <a
-                  href="https://www.linkedin.com/in/youlong-ma/"
-                  aria-label="Linkedin"
-                >
-                  <Icons.linkedin className="size-6 hover:animate-bounce" />
-                </a>
-              </Button>
-              <Button variant="secondary" size="icon" asChild>
-                <a href="https://github.com/yma2022" aria-label="Github">
-                  <Icons.github className="size-6 hover:animate-spin" />
-                </a>
-              </Button>
-            </motion.div>
-            <NextPage page="#bio" />
-          </>
-        )}
-        <EarthScene />
-      </section>
-    </>
+              {globePaused ? 'Resume globe' : 'Pause globe'}
+            </button>
+          )}
+        </div>
+      </div>
+      <div className="hero-bottom">
+        <span>Full-stack development · AI · Backend systems</span>
+        <Link href="#selected-work">
+          A few things I’ve built <span aria-hidden="true">↓</span>
+        </Link>
+      </div>
+    </section>
   );
 };

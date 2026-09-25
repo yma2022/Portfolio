@@ -1,30 +1,17 @@
 import { env } from '@/env.mjs';
 
 export const siteConfig = {
-  title: 'Youlong Ma',
+  name: 'Youlong Ma',
+  title: 'Youlong Ma | Full-Stack Engineer & AI Developer',
   description:
-    "Hello, I'm Youlong Ma. I love solving complex problems and I am passionate about development.",
+    'Full-stack engineer building AI-powered tools, retrieval agents, and scalable backend systems. Explore my projects, experience, and technical work.',
   keywords: [
     'Youlong Ma',
     'yma2022',
-    'React',
-    'Next.js',
-    'Web development',
-    'Front-end',
-    'UI/UX',
-    'Responsive design',
-    'JavaScript',
-    'HTML',
-    'CSS',
-    'Portfolio',
-    'Projects',
-    'Website',
-    'Web applications',
-    'Developer',
-    'Code',
-    'Programming',
-    'Tech enthusiast',
+    'Full-stack engineer',
+    'AI developer',
+    'Software engineering',
   ],
-  url: env.SITE_URL || 'https://mayoulong.dev',
+  url: (env.SITE_URL || 'https://mayoulong.dev').replace(/\/+$/, ''),
   googleSiteVerificationId: env.GOOGLE_SITE_VERIFICATION_ID || '',
 };
