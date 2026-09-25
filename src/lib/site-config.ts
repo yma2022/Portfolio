@@ -25,6 +25,6 @@ export const siteConfig = {
     'Programming',
     'Tech enthusiast',
   ],
-  url: env.SITE_URL || 'https://example.com',
+  url: env.SITE_URL || 'https://mayoulong.dev',
   googleSiteVerificationId: env.GOOGLE_SITE_VERIFICATION_ID || '',
 };

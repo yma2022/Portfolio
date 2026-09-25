@@ -1,10 +1,13 @@
+// GitHub Pages supplies this at build time. Local development uses the root.
+const basePath = (process.env.NEXT_PUBLIC_BASE_PATH || '').replace(/\/+$/, '');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  basePath: '/Portfolio',
+  basePath,
   trailingSlash: true,
   env: {
-    NEXT_PUBLIC_BASE_PATH: '/Portfolio',
+    NEXT_PUBLIC_BASE_PATH: basePath,
   },
 };
 
