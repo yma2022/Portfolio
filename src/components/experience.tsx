@@ -39,7 +39,7 @@ const ExperienceCard = ({
       icon={<Icons.briefcase />}
       iconStyle={{
         boxShadow: 'none',
-        border: '2px solid hsl(var(--foreground)',
+        border: '2px solid hsl(var(--foreground))',
       }}
     >
       <h3 ref={ref} className="font-medium">
@@ -52,8 +52,9 @@ const ExperienceCard = ({
         {description}
       </p>
       <button
+        aria-expanded={isExpanded}
         onClick={() => setIsExpanded((v) => !v)}
-        className="text-brand mt-1 text-xs hover:underline"
+        className="text-brand focus-visible:ring-brand mt-1 rounded py-2 text-xs hover:underline focus-visible:outline-none focus-visible:ring-2"
       >
         {isExpanded ? 'Show less ↑' : 'Show more ↓'}
       </button>

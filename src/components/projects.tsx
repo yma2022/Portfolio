@@ -31,7 +31,7 @@ export const Projects = ({ starsCount }: TProps) => {
       >
         <SectionHeading
           heading="Projects"
-          content="Projects I worked on. Each of them containing its own case study."
+          content="Selected projects in AI, full-stack development, and education."
         />
       </motion.div>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">

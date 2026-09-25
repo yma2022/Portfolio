@@ -3,6 +3,8 @@ import { geoContains } from 'd3-geo';
 import * as THREE from 'three';
 import { feature } from 'topojson-client';
 
+import { assetPath } from '@/lib/asset-path';
+
 // Function to convert lat/lon to 3D sphere coordinates
 const latLonToXYZ = (lat, lon, radius = 1) => {
   const phi = (90 - lat) * (Math.PI / 180);
@@ -69,9 +71,15 @@ const createParticleMaterial = (color) =>
 
 const EarthScene = () => {
   const mountRef = useRef(null);
-  const globeRef = useRef(new THREE.Group());
 
   useEffect(() => {
+    const mountNode = mountRef.current;
+    if (!mountNode) return;
+    const controller = new AbortController();
+    const globe = new THREE.Group();
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let animationFrame;
+    let disposed = false;
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
       75,
@@ -79,142 +87,186 @@ const EarthScene = () => {
       0.1,
       1000
     );
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    let renderer;
+    try {
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    } catch {
+      // The decorative background is optional on devices without WebGL.
+      return;
+    }
     renderer.setClearColor(0x000000, 0);
 
     renderer.setSize(window.innerWidth, window.innerHeight);
-    mountRef.current.appendChild(renderer.domElement);
+    mountNode.appendChild(renderer.domElement);
     camera.position.z = 3;
 
-    scene.add(globeRef.current);
-    globeRef.current.scale.set(1.5, 1.5, 1.5);
+    scene.add(globe);
+    globe.scale.set(1.5, 1.5, 1.5);
 
     // Load world map and cities data
     Promise.all([
-      fetch('./world-110m.json').then((res) => res.json()),
-      fetch('./cities.json').then((res) => res.json()),
-    ]).then(([worldData, citiesData]) => {
-      const countries = feature(
-        worldData,
-        worldData.objects.countries
-      ).features;
-      const cities = citiesData.features;
+      ...['/world-110m.json', '/cities.json'].map(async (path) => {
+        const res = await fetch(assetPath(path), { signal: controller.signal });
+        if (!res.ok) throw new Error('Unable to load globe data');
+        return res.json();
+      }),
+    ])
+      .then(([worldData, citiesData]) => {
+        if (disposed) return;
+        const countries = feature(
+          worldData,
+          worldData.objects.countries
+        ).features;
+        const cities = citiesData.features;
 
-      // Create country borders with a glowing effect
-      const lineMaterial = new THREE.LineBasicMaterial({
-        color: 0xffffff,
-        transparent: true,
-        opacity: 0.08,
-      });
+        // Create country borders with a glowing effect
+        const lineMaterial = new THREE.LineBasicMaterial({
+          color: 0xffffff,
+          transparent: true,
+          opacity: 0.08,
+        });
 
-      const particles = new THREE.BufferGeometry();
-      const positions = [];
+        const particles = new THREE.BufferGeometry();
+        const positions = [];
 
-      countries.forEach((country) => {
-        if (!country.geometry) return;
+        countries.forEach((country) => {
+          if (!country.geometry) return;
 
-        const polygons =
-          country.geometry.type === 'Polygon'
-            ? [country.geometry.coordinates]
-            : country.geometry.coordinates;
+          const polygons =
+            country.geometry.type === 'Polygon'
+              ? [country.geometry.coordinates]
+              : country.geometry.coordinates;
 
-        // Draw country borders
-        polygons.forEach((polygon) => {
-          polygon.forEach((ring) => {
-            const points = ring.map(([lon, lat]) =>
-              latLonToXYZ(lat, lon, 1.01)
-            );
-            if (points.length > 1) {
-              const geometry = new THREE.BufferGeometry().setFromPoints(points);
-              const line = new THREE.Line(geometry, lineMaterial);
-              globeRef.current.add(line);
-            }
+          // Draw country borders
+          polygons.forEach((polygon) => {
+            polygon.forEach((ring) => {
+              const points = ring.map(([lon, lat]) =>
+                latLonToXYZ(lat, lon, 1.01)
+              );
+              if (points.length > 1) {
+                const geometry = new THREE.BufferGeometry().setFromPoints(
+                  points
+                );
+                const line = new THREE.Line(geometry, lineMaterial);
+                globe.add(line);
+              }
+            });
           });
         });
+
+        // Generate globally distributed land particles
+        const globalParticles = generateGlobalParticles(countries, 500);
+        globalParticles.forEach(([lon, lat]) => {
+          const pos = latLonToXYZ(lat, lon, 1.02);
+          positions.push(pos.x, pos.y, pos.z);
+        });
+
+        particles.setAttribute(
+          'position',
+          new THREE.Float32BufferAttribute(positions, 3)
+        );
+
+        // White glowing land particles (Circular)
+        const landParticleMaterial = createParticleMaterial(0xffffff);
+        const landParticleSystem = new THREE.Points(
+          particles,
+          landParticleMaterial
+        );
+        globe.add(landParticleSystem);
+
+        // **Cities: Red Glowing Circular Particles**
+        const cityParticles = new THREE.BufferGeometry();
+        const cityPositions = [];
+
+        cities.forEach((city) => {
+          const lat = city.properties.lat;
+          const lon = city.properties.lon;
+
+          if (lat === undefined || lon === undefined) {
+            console.warn('City missing lat/lon:', city);
+            return;
+          }
+
+          const pos = latLonToXYZ(lat, lon, 1.05); // Cities slightly raised
+          cityPositions.push(pos.x, pos.y, pos.z);
+        });
+
+        cityParticles.setAttribute(
+          'position',
+          new THREE.Float32BufferAttribute(cityPositions, 3)
+        );
+
+        // Brand indigo glowing circular city particles
+        const cityParticleMaterial = createParticleMaterial(0x6366f1);
+        const cityParticleSystem = new THREE.Points(
+          cityParticles,
+          cityParticleMaterial
+        );
+        globe.add(cityParticleSystem);
+        renderer.render(scene, camera);
+      })
+      .catch(() => {
+        // Keep the page usable if the optional map assets cannot be loaded.
       });
-
-      // Generate globally distributed land particles
-      const globalParticles = generateGlobalParticles(countries, 500);
-      globalParticles.forEach(([lon, lat]) => {
-        const pos = latLonToXYZ(lat, lon, 1.02);
-        positions.push(pos.x, pos.y, pos.z);
-      });
-
-      particles.setAttribute(
-        'position',
-        new THREE.Float32BufferAttribute(positions, 3)
-      );
-
-      // White glowing land particles (Circular)
-      const landParticleMaterial = createParticleMaterial(0xffffff);
-      const landParticleSystem = new THREE.Points(
-        particles,
-        landParticleMaterial
-      );
-      globeRef.current.add(landParticleSystem);
-
-      // **Cities: Red Glowing Circular Particles**
-      const cityParticles = new THREE.BufferGeometry();
-      const cityPositions = [];
-
-      cities.forEach((city) => {
-        const lat = city.properties.lat;
-        const lon = city.properties.lon;
-
-        if (lat === undefined || lon === undefined) {
-          console.warn('City missing lat/lon:', city);
-          return;
-        }
-
-        const pos = latLonToXYZ(lat, lon, 1.05); // Cities slightly raised
-        cityPositions.push(pos.x, pos.y, pos.z);
-      });
-
-      cityParticles.setAttribute(
-        'position',
-        new THREE.Float32BufferAttribute(cityPositions, 3)
-      );
-
-      // Brand indigo glowing circular city particles
-      const cityParticleMaterial = createParticleMaterial(0x6366f1);
-      const cityParticleSystem = new THREE.Points(
-        cityParticles,
-        cityParticleMaterial
-      );
-      globeRef.current.add(cityParticleSystem);
-    });
 
     // Animation loop
     const animate = () => {
-      requestAnimationFrame(animate);
-      globeRef.current.rotation.y += 0.0005;
+      if (disposed || document.hidden || reducedMotion.matches) return;
+      animationFrame = requestAnimationFrame(animate);
+      globe.rotation.y += 0.0005;
       renderer.render(scene, camera);
     };
 
     animate();
+    const updateAnimation = () => {
+      cancelAnimationFrame(animationFrame);
+      animate();
+      renderer.render(scene, camera);
+    };
+    document.addEventListener('visibilitychange', updateAnimation);
+    reducedMotion.addEventListener('change', updateAnimation);
 
     // Handle resize
     const handleResize = () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.render(scene, camera);
     };
 
     window.addEventListener('resize', handleResize);
 
-    const mountNode = mountRef.current;
-
     return () => {
+      disposed = true;
+      controller.abort();
+      cancelAnimationFrame(animationFrame);
       window.removeEventListener('resize', handleResize);
+      document.removeEventListener('visibilitychange', updateAnimation);
+      reducedMotion.removeEventListener('change', updateAnimation);
+      const materials = new Set();
+      globe.traverse((object) => {
+        object.geometry?.dispose();
+        if (object.material) materials.add(object.material);
+      });
+      materials.forEach((material) => material.dispose());
+      globe.clear();
       renderer.dispose();
-      if (mountNode) mountNode.removeChild(renderer.domElement);
+      renderer.domElement.remove();
     };
   }, []);
 
   return (
     <div
       ref={mountRef}
-      style={{ position: 'fixed', top: 0, left: 0, zIndex: -1 }}
+      aria-hidden="true"
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        zIndex: -1,
+        pointerEvents: 'none',
+        opacity: 0.45,
+      }}
     />
   );
 };

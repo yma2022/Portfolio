@@ -16,7 +16,7 @@ export const NextPage = ({ page }: NextPageProps) => {
         asChild
         className="hidden bg-transparent sm:mt-24 sm:flex "
       >
-        <a href={page}>
+        <a href={page} aria-label="Continue to next section">
           <Icons.chevronDown className="size-10" />
         </a>
       </Button>

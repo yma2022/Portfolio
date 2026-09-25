@@ -98,7 +98,7 @@ export const projectsData = [
     links: {
       preview: 'https://apps.apple.com/us/app/ask-eddie/id6738869004',
       github: 'https://github.com/yma2022/',
-      githubApi: 'https://api.github.com/repos/yma2022/',
+      githubApi: null,
     },
   },
 ] as const;
@@ -112,7 +112,7 @@ export const experiencesData = [
     date: '2025 - present',
   },
   {
-    title: 'EduPolaris AI, Tech Lead &Software Engineer',
+    title: 'EduPolaris AI, Tech Lead & Software Engineer',
     location: 'Remote',
     description:
       'Led the development of an AI-driven education platform using Go, PostgreSQL, and gRPC. Delivered system architecture improvements for high performance and scalability, advancing product capabilities and user engagement.',

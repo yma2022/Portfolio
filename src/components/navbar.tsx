@@ -11,16 +11,20 @@ export const Navbar = () => {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
-      <nav className="bg-background/70 mx-auto mt-4 flex max-w-fit items-center gap-1 rounded-full border border-white/10 px-4 py-2 shadow-lg shadow-black/20 backdrop-blur-md">
+      <nav
+        aria-label="Main navigation"
+        className="bg-background/70 mx-auto mt-4 flex w-fit max-w-[calc(100%-1rem)] items-center rounded-full border border-white/10 px-1 py-2 shadow-lg shadow-black/20 backdrop-blur-md sm:gap-1 sm:px-4"
+      >
         {links.map((link) => (
           <a
             key={link.hash}
             href={link.hash}
+            aria-current={activeSection === link.name ? 'location' : undefined}
             onClick={() => {
               setActiveSection(link.name);
               setTimeOfLastClick(Date.now());
             }}
-            className="relative px-3 py-1.5 text-sm font-medium outline-none transition-colors duration-200"
+            className="focus-visible:ring-brand relative rounded-full p-2 text-xs font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 sm:px-3 sm:py-1.5 sm:text-sm"
           >
             {activeSection === link.name && (
               <motion.span

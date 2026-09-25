@@ -6,6 +6,7 @@ import type { Metadata } from 'next';
 import { ActiveSectionProvider } from '@/components/active-section-provider';
 import { Navbar } from '@/components/navbar';
 import { Toaster } from '@/components/toaster';
+import { assetPath } from '@/lib/asset-path';
 import { fonts } from '@/lib/fonts';
 import { siteConfig } from '@/lib/site-config';
 import { cn } from '@/lib/utils';
@@ -20,9 +21,9 @@ export const metadata: Metadata = {
   keywords: siteConfig.keywords,
   robots: { index: true, follow: true },
   icons: {
-    icon: '/favicon/favicon.ico',
-    shortcut: '/favicon/favicon-16x16.png',
-    apple: '/favicon/apple-touch-icon.png',
+    icon: assetPath('/favicon/favicon.ico'),
+    shortcut: assetPath('/favicon/favicon-16x16.png'),
+    apple: assetPath('/favicon/apple-touch-icon.png'),
   },
   verification: {
     google: siteConfig.googleSiteVerificationId,

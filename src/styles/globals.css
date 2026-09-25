@@ -69,6 +69,12 @@
   body {
     @apply text-foreground;
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
 }
 
 @layer utilities {

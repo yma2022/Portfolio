@@ -14,15 +14,14 @@ export const useSectionInView = (
   const { setActiveSection, timeOfLastClick } = useActiveSection();
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (inView && Date.now() - timeOfLastClick > 1000) {
-        setActiveSection(sectionName);
-      }
-    };
+    if (!inView) return;
 
-    window.addEventListener('scroll', handleScroll);
-
-    return () => window.removeEventListener('scroll', handleScroll);
+    // Reconcile after a navigation click even if scrolling has already stopped.
+    const timer = window.setTimeout(
+      () => setActiveSection(sectionName),
+      Math.max(0, 1000 - (Date.now() - timeOfLastClick))
+    );
+    return () => window.clearTimeout(timer);
   }, [inView, setActiveSection, timeOfLastClick, sectionName]);
 
   return {

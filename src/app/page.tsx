@@ -11,9 +11,20 @@ import { projectsData } from '@/lib/data';
 const Home = async () => {
   const starsCount = await Promise.all(
     projectsData.map(async ({ links }) => {
-      const res = await fetch(links.githubApi);
-      const data = await res.json();
-      return data.stargazers_count;
+      if (!links.githubApi) return 0;
+      try {
+        const res = await fetch(links.githubApi, {
+          signal: AbortSignal.timeout(5000),
+        });
+        if (!res.ok) return 0;
+        const data = await res.json();
+        return typeof data.stargazers_count === 'number'
+          ? data.stargazers_count
+          : 0;
+      } catch {
+        // Repository statistics are optional; keep the portfolio available.
+        return 0;
+      }
     })
   );
 
@@ -39,14 +50,14 @@ const Home = async () => {
           gtag('config', 'G-E98RBPVL3W');
         `}
       </Script>
-      <div className="container flex flex-col items-center">
+      <main className="container flex flex-col items-center px-4 sm:px-8">
         <Intro />
         <Bio />
         <Projects starsCount={starsCount} />
         <Experience />
         <About />
         <Footer />
-      </div>
+      </main>
     </>
   );
 };

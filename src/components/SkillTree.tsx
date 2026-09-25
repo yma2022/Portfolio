@@ -174,7 +174,14 @@ const TechSkillsTree = () => {
       .select(containerRef.current)
       .append('svg')
       .style('width', '100%')
-      .style('height', '100%')
+      .style('min-width', '640px')
+      .style('height', 'auto')
+      .style('display', 'block')
+      .attr('role', 'img')
+      .attr(
+        'aria-label',
+        'Technology skills grouped by Web, Databases, Tools, DevOps, Data Analysis, and AI'
+      )
       .attr('viewBox', `0 0 ${width} ${height}`)
       .attr('preserveAspectRatio', 'xMidYMid meet');
 
@@ -270,6 +277,14 @@ const TechSkillsTree = () => {
 
     // === 8) On each tick, update positions of nodes & links ===
     simulation.on('tick', () => {
+      // Keep nodes and their labels inside the diagram, including after dragging.
+      data.nodes.forEach((d) => {
+        d.x = Math.max(
+          24,
+          Math.min(width - 24 - d.id.length * 7, d.x ?? width / 2)
+        );
+        d.y = Math.max(24, Math.min(height - 24, d.y ?? height / 2));
+      });
       link
         .attr('x1', (d: Link) => (d.source as Node).x ?? 0)
         .attr('y1', (d: Link) => (d.source as Node).y ?? 0)
@@ -289,7 +304,20 @@ const TechSkillsTree = () => {
     };
   }, []);
 
-  return <div ref={containerRef} style={{ width: '100%', height: '100%' }} />;
+  return (
+    <div className="mt-8 w-full">
+      <p className="text-muted-foreground text-center text-sm sm:hidden">
+        Swipe across the diagram to explore the skills.
+      </p>
+      <div
+        ref={containerRef}
+        tabIndex={0}
+        role="region"
+        aria-label="Skills diagram"
+        className="bg-secondary/90 focus-visible:ring-brand w-full overflow-x-auto rounded-lg border focus-visible:outline-none focus-visible:ring-2"
+      />
+    </div>
+  );
 };
 
 export default TechSkillsTree;

@@ -11,6 +11,7 @@ import EmailReveal from '@/components/email';
 import { Icons } from '@/components/icons';
 import { NextPage } from '@/components/nextpage';
 import { useSectionInView } from '@/hooks/use-section-in-view';
+import { assetPath } from '@/lib/asset-path';
 
 const EarthScene = dynamic(() => import('../components/EarthScene'), {
   ssr: false,
@@ -26,7 +27,7 @@ export const Intro = () => {
       <section
         ref={ref}
         id="home"
-        className="flex h-screen w-full scroll-mt-96 flex-col items-center justify-center gap-6 text-center"
+        className="flex min-h-svh w-full scroll-mt-0 flex-col items-center justify-center gap-6 pb-12 pt-28 text-center"
       >
         {!isLoaded ? (
           <LoadingScreen onComplete={() => setIsLoaded(true)} />
@@ -41,7 +42,7 @@ export const Intro = () => {
               {!avatarError ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
-                  src="/avatar.jpg"
+                  src={assetPath('/avatar.jpg')}
                   alt="Youlong Ma"
                   className="size-full object-cover"
                   onError={() => setAvatarError(true)}
@@ -77,22 +78,9 @@ export const Intro = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.15, duration: 0.8, ease: 'easeOut' }}
-              className="flex flex-wrap justify-center gap-x-[0.05em] text-sm font-medium uppercase tracking-widest"
+              className="text-brand max-w-sm text-sm font-medium uppercase leading-relaxed tracking-widest"
             >
-              {'Full-Stack Engineer & AI Developer'.split('').map((char, i) => (
-                <motion.span
-                  key={i}
-                  whileHover={{ scale: 1.4, color: 'hsl(var(--brand))' }}
-                  transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-                  style={{
-                    display: 'inline-block',
-                    whiteSpace: 'pre',
-                    color: 'hsl(var(--brand))',
-                  }}
-                >
-                  {char}
-                </motion.span>
-              ))}
+              Full-Stack Engineer &amp; AI Developer
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 40 }}
@@ -103,10 +91,10 @@ export const Intro = () => {
               <Button
                 variant="default"
                 size="lg"
-                className="bg-brand hover:bg-brand/90 hidden text-white sm:flex"
+                className="bg-brand hover:bg-brand/90 w-full text-white sm:w-auto"
                 asChild
               >
-                <a href="/yma2022.pdf" download>
+                <a href={assetPath('/yma2022.pdf')} download>
                   Download CV <Icons.download className="ml-2 size-4" />
                 </a>
               </Button>
