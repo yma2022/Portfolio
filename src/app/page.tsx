@@ -1,65 +1,118 @@
-import Script from 'next/script';
+import Link from 'next/link';
 
-import { About } from '@/components/about';
-import { Bio } from '@/components/bio';
-import { Experience } from '@/components/experience';
-import { Footer } from '@/components/footer';
 import { Intro } from '@/components/intro';
-import { Projects } from '@/components/projects';
-import { projectsData } from '@/lib/data';
+import { WorkEntry } from '@/components/work-entry';
+import { work } from '@/lib/work';
 
-const Home = async () => {
-  const starsCount = await Promise.all(
-    projectsData.map(async ({ links }) => {
-      if (!links.githubApi) return 0;
-      try {
-        const res = await fetch(links.githubApi, {
-          signal: AbortSignal.timeout(5000),
-        });
-        if (!res.ok) return 0;
-        const data = await res.json();
-        return typeof data.stargazers_count === 'number'
-          ? data.stargazers_count
-          : 0;
-      } catch {
-        // Repository statistics are optional; keep the portfolio available.
-        return 0;
-      }
-    })
-  );
-
+export default function Home() {
   return (
-    <>
-      {/* Umami Analytics */}
-      <Script
-        src="https://cloud.umami.is/script.js"
-        data-website-id="89e3cea4-922d-41db-ae7f-ccf75a6310bd"
-        strategy="afterInteractive"
-      />
-      {/* Google Analytics */}
-      <Script
-        async
-        src="https://www.googletagmanager.com/gtag/js?id=G-E98RBPVL3W"
-        strategy="afterInteractive"
-      />
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-E98RBPVL3W');
-        `}
-      </Script>
-      <main className="container flex flex-col items-center px-4 sm:px-8">
-        <Intro />
-        <Bio />
-        <Projects starsCount={starsCount} />
-        <Experience />
-        <About />
-        <Footer />
-      </main>
-    </>
+    <main id="main-content" tabIndex={-1} className="page-shell">
+      <Intro />
+      <section
+        id="selected-work"
+        aria-labelledby="work-title"
+        className="chapter"
+      >
+        <div className="section-intro">
+          <p className="eyebrow">01 / Selected work</p>
+          <div>
+            <h2 id="work-title">Ideas, made real.</h2>
+            <p className="muted-copy">
+              A few explorations in intelligence, information, and the systems
+              that connect them.
+            </p>
+          </div>
+          <Link href="/work/" className="text-link">
+            All work <span aria-hidden="true">↗</span>
+          </Link>
+        </div>
+        {work.slice(0, 2).map((project) => (
+          <WorkEntry key={project.slug} project={project} />
+        ))}
+        <div className="other-work">
+          {work.slice(2).map((project) => (
+            <Link key={project.slug} href={`/work/${project.slug}/`}>
+              <span className="eyebrow">
+                {project.number} / {project.focus}
+              </span>
+              <span>
+                {project.title}
+                <span aria-hidden="true">↗</span>
+              </span>
+            </Link>
+          ))}
+        </div>
+      </section>
+      <section aria-labelledby="focus-title" className="chapter focus-chapter">
+        <div className="section-intro">
+          <p className="eyebrow">02 / Engineering focus</p>
+          <h2 id="focus-title">
+            From the interface
+            <br />
+            to the infrastructure.
+          </h2>
+        </div>
+        <div className="focus-list">
+          <article>
+            <span className="focus-symbol" aria-hidden="true">
+              ↗
+            </span>
+            <h3>Applied intelligence</h3>
+            <p>
+              Agents that retrieve, reason, and teach. Exploring how language
+              models become useful tools through structured workflows.
+            </p>
+            <span className="eyebrow">LangGraph / Python / OpenAI</span>
+          </article>
+          <article>
+            <span className="focus-symbol" aria-hidden="true">
+              ⌘
+            </span>
+            <h3>Connected systems</h3>
+            <p>
+              The backend work that holds an experience together: services, data
+              processing, and reliable platforms.
+            </p>
+            <span className="eyebrow">Go / PostgreSQL / AWS</span>
+          </article>
+          <article>
+            <span className="focus-symbol" aria-hidden="true">
+              ↔
+            </span>
+            <h3>End-to-end products</h3>
+            <p>
+              Bringing the pieces into a usable whole, from web interfaces to
+              mobile applications and the services behind them.
+            </p>
+            <span className="eyebrow">TypeScript / React / Node.js</span>
+          </article>
+        </div>
+      </section>
+      <section
+        aria-labelledby="journey-title"
+        className="chapter journey-teaser"
+      >
+        <p className="eyebrow">03 / The path so far</p>
+        <div>
+          <h2 id="journey-title">
+            Always building.
+            <br />
+            <span className="quiet-text">Still curious.</span>
+          </h2>
+          <p className="muted-copy">
+            From computer science at Georgia Tech to data platforms at Amazon,
+            AI education at EduPolaris, and financial technology at Numo.
+          </p>
+          <div className="inline-links">
+            <Link href="/experience/" className="text-link">
+              Explore my experience <span aria-hidden="true">↗</span>
+            </Link>
+            <Link href="/about/" className="text-link">
+              The person behind the work <span aria-hidden="true">↗</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+    </main>
   );
-};
-
-export default Home;
+}

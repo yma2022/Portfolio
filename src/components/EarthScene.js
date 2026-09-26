@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
-import { geoContains } from 'd3-geo';
 import * as THREE from 'three';
 import { feature } from 'topojson-client';
 
 import { assetPath } from '@/lib/asset-path';
+import globalParticles from '@/lib/globe-particles.json';
 
 // Function to convert lat/lon to 3D sphere coordinates
 const latLonToXYZ = (lat, lon, radius = 1) => {
@@ -16,44 +16,18 @@ const latLonToXYZ = (lat, lon, radius = 1) => {
   );
 };
 
-// Lambert Equal-Area Projection Sampling for Uniform Distribution
-const randomPointOnSphere = () => {
-  const u = Math.random();
-  const v = Math.random();
-  const theta = 2 * Math.PI * u;
-  const phi = Math.acos(2 * v - 1);
-  return {
-    lon: (theta * 180) / Math.PI - 180,
-    lat: (phi * 180) / Math.PI - 90,
-  };
-};
-
-// Generate globally spread land particles
-const generateGlobalParticles = (countries, totalParticles = 500) => {
-  const particles = [];
-  let attempts = 0;
-
-  while (particles.length < totalParticles && attempts < totalParticles * 10) {
-    const { lon, lat } = randomPointOnSphere();
-    if (countries.some((country) => geoContains(country, [lon, lat]))) {
-      particles.push([lon, lat]);
-    }
-    attempts++;
-  }
-
-  return particles;
-};
-
 // Custom Shader for Circular Particles
-const createParticleMaterial = (color) =>
+const createParticleMaterial = (color, pointScale) =>
   new THREE.ShaderMaterial({
     uniforms: {
       color: { value: new THREE.Color(color) },
+      pointScale: { value: pointScale },
     },
     vertexShader: `
+    uniform float pointScale;
     void main() {
       vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-      gl_PointSize = 15.0 * (1.0 / -mvPosition.z); // Adjust size dynamically
+      gl_PointSize = 15.0 * pointScale * (1.0 / -mvPosition.z);
       gl_Position = projectionMatrix * mvPosition;
     }
   `,
@@ -69,8 +43,15 @@ const createParticleMaterial = (color) =>
     blending: THREE.AdditiveBlending,
   });
 
-const EarthScene = () => {
+const EarthScene = ({ paused = false }) => {
   const mountRef = useRef(null);
+  const pauseRef = useRef(paused);
+  const updateAnimationRef = useRef(null);
+
+  useEffect(() => {
+    pauseRef.current = paused;
+    updateAnimationRef.current?.();
+  }, [paused]);
 
   useEffect(() => {
     const mountNode = mountRef.current;
@@ -80,10 +61,11 @@ const EarthScene = () => {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let animationFrame;
     let disposed = false;
+    let inView = true;
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
       75,
-      window.innerWidth / window.innerHeight,
+      mountNode.clientWidth / Math.max(1, mountNode.clientHeight),
       0.1,
       1000
     );
@@ -96,12 +78,14 @@ const EarthScene = () => {
     }
     renderer.setClearColor(0x000000, 0);
 
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+    renderer.setSize(mountNode.clientWidth, mountNode.clientHeight);
     mountNode.appendChild(renderer.domElement);
-    camera.position.z = 3;
+    camera.position.z = 2.85;
 
     scene.add(globe);
-    globe.scale.set(1.5, 1.5, 1.5);
+    globe.scale.set(1.45, 1.45, 1.45);
+    globe.rotation.z = -0.18;
 
     // Load world map and cities data
     Promise.all([
@@ -123,11 +107,12 @@ const EarthScene = () => {
         const lineMaterial = new THREE.LineBasicMaterial({
           color: 0xffffff,
           transparent: true,
-          opacity: 0.08,
+          opacity: 0.2,
         });
 
         const particles = new THREE.BufferGeometry();
         const positions = [];
+        const borderPositions = [];
 
         countries.forEach((country) => {
           if (!country.geometry) return;
@@ -143,19 +128,25 @@ const EarthScene = () => {
               const points = ring.map(([lon, lat]) =>
                 latLonToXYZ(lat, lon, 1.01)
               );
-              if (points.length > 1) {
-                const geometry = new THREE.BufferGeometry().setFromPoints(
-                  points
+              for (let i = 1; i < points.length; i++) {
+                borderPositions.push(
+                  ...points[i - 1].toArray(),
+                  ...points[i].toArray()
                 );
-                const line = new THREE.Line(geometry, lineMaterial);
-                globe.add(line);
               }
             });
           });
         });
 
+        // One draw call for all borders instead of one per country ring.
+        const borders = new THREE.BufferGeometry();
+        borders.setAttribute(
+          'position',
+          new THREE.Float32BufferAttribute(borderPositions, 3)
+        );
+        globe.add(new THREE.LineSegments(borders, lineMaterial));
+
         // Generate globally distributed land particles
-        const globalParticles = generateGlobalParticles(countries, 500);
         globalParticles.forEach(([lon, lat]) => {
           const pos = latLonToXYZ(lat, lon, 1.02);
           positions.push(pos.x, pos.y, pos.z);
@@ -167,7 +158,11 @@ const EarthScene = () => {
         );
 
         // White glowing land particles (Circular)
-        const landParticleMaterial = createParticleMaterial(0xffffff);
+        const pointScale = Math.min(1, mountNode.clientWidth / 600);
+        const landParticleMaterial = createParticleMaterial(
+          0xc7d5ed,
+          pointScale
+        );
         const landParticleSystem = new THREE.Points(
           particles,
           landParticleMaterial
@@ -197,7 +192,10 @@ const EarthScene = () => {
         );
 
         // Brand indigo glowing circular city particles
-        const cityParticleMaterial = createParticleMaterial(0x6366f1);
+        const cityParticleMaterial = createParticleMaterial(
+          0x899cff,
+          pointScale
+        );
         const cityParticleSystem = new THREE.Points(
           cityParticles,
           cityParticleMaterial
@@ -210,37 +208,66 @@ const EarthScene = () => {
       });
 
     // Animation loop
-    const animate = () => {
-      if (disposed || document.hidden || reducedMotion.matches) return;
+    let lastFrame = 0;
+    const animate = (now = 0) => {
+      if (
+        disposed ||
+        document.hidden ||
+        !inView ||
+        reducedMotion.matches ||
+        pauseRef.current
+      )
+        return;
       animationFrame = requestAnimationFrame(animate);
-      globe.rotation.y += 0.0005;
+      if (now - lastFrame < 1000 / 30) return;
+      globe.rotation.y += Math.min(now - lastFrame, 100) * 0.00003;
+      lastFrame = now;
       renderer.render(scene, camera);
     };
 
     animate();
     const updateAnimation = () => {
       cancelAnimationFrame(animationFrame);
+      lastFrame = performance.now();
       animate();
       renderer.render(scene, camera);
     };
+    updateAnimationRef.current = updateAnimation;
     document.addEventListener('visibilitychange', updateAnimation);
     reducedMotion.addEventListener('change', updateAnimation);
 
+    const visibility = new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting;
+      updateAnimation();
+    });
+    visibility.observe(mountNode);
+
     // Handle resize
     const handleResize = () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.aspect =
+        mountNode.clientWidth / Math.max(1, mountNode.clientHeight);
       camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setSize(mountNode.clientWidth, mountNode.clientHeight);
+      globe.traverse((object) => {
+        if (object.material?.uniforms?.pointScale)
+          object.material.uniforms.pointScale.value = Math.min(
+            1,
+            mountNode.clientWidth / 600
+          );
+      });
       renderer.render(scene, camera);
     };
 
-    window.addEventListener('resize', handleResize);
+    const resize = new ResizeObserver(handleResize);
+    resize.observe(mountNode);
 
     return () => {
       disposed = true;
+      updateAnimationRef.current = null;
       controller.abort();
       cancelAnimationFrame(animationFrame);
-      window.removeEventListener('resize', handleResize);
+      resize.disconnect();
+      visibility.disconnect();
       document.removeEventListener('visibilitychange', updateAnimation);
       reducedMotion.removeEventListener('change', updateAnimation);
       const materials = new Set();
@@ -255,20 +282,7 @@ const EarthScene = () => {
     };
   }, []);
 
-  return (
-    <div
-      ref={mountRef}
-      aria-hidden="true"
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        zIndex: -1,
-        pointerEvents: 'none',
-        opacity: 0.45,
-      }}
-    />
-  );
+  return <div ref={mountRef} aria-hidden="true" className="earth-scene" />;
 };
 
 export default EarthScene;

@@ -1,0 +1,38 @@
+export const experienceStories = [
+  {
+    date: '2025 – present',
+    location: 'Pittsburgh, PA',
+    name: 'Numo',
+    role: 'Software Engineer',
+    focus: 'Financial technology, built to last.',
+    text: 'Building and scaling financial technology products, with a focus on backend systems and platform reliability.',
+    tags: ['Backend systems', 'Platform reliability'],
+  },
+  {
+    date: '2024 – 2025',
+    location: 'Remote',
+    name: 'EduPolaris AI',
+    role: 'Tech Lead & Software Engineer',
+    focus: 'An architecture for AI-driven education.',
+    text: 'Led development of an education platform using Go, PostgreSQL, and gRPC. Improved the system architecture for performance and scalability while advancing the product’s capabilities.',
+    tags: ['Go', 'PostgreSQL', 'gRPC'],
+  },
+  {
+    date: '2024',
+    location: 'Detroit, MI',
+    name: 'Amazon',
+    role: 'Software Engineering Intern',
+    focus: 'Working where data meets scale.',
+    text: 'Developed scalable applications on the Datalake platform using AWS and distributed systems. The work focused on system performance, data-processing workflows, and service reliability.',
+    tags: ['AWS', 'Distributed systems', 'Data processing'],
+  },
+  {
+    date: '2023',
+    location: 'Atlanta, GA',
+    name: 'Georgia Tech',
+    role: 'MS in Computer Science',
+    focus: 'A foundation for the problems ahead.',
+    text: 'Studied advanced algorithms, software engineering, and machine learning. Applied that foundation through projects focused on scalable software and data-driven solutions.',
+    tags: ['Algorithms', 'Software engineering', 'Machine learning'],
+  },
+];
